@@ -42,7 +42,7 @@ function App(tasklist) {
 
   return app = div(
     h1('Todo List'),
-    InputForm(add, tasklist),
+    InputForm(add),
     tasks=Tasks(tasklist),
     div(
       button({ style: 'float: right', onclick: reverse }, 'Reverse'),
