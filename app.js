@@ -8,7 +8,7 @@ function InputForm(add) {
     add(input_task.value);
   };
 
-  return form({ onsubmit: handleSubmit },
+  return form({ id: 'form_task', onsubmit: handleSubmit },
     input({
       name: 'input_task',
       placeholder: 'Type a task',
@@ -33,7 +33,7 @@ function App(tasklist) {
   const add = (text) => {
     tasklist.push(text);
     app.replaceWith(app=App(tasklist));
-    app.querySelector('[name=input_task]').focus();
+    app.children.form_task.input_task.focus();
   }
 
   const reverse = () => {
