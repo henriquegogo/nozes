@@ -40,7 +40,7 @@ function App(tasklist) {
     tasks.replaceWith(tasks=Tasks(tasklist.reverse()));
   }
 
-  return app = div(
+  return app=div(
     h1('Todo List'),
     InputForm(add),
     tasks=Tasks(tasklist),
@@ -51,4 +51,4 @@ function App(tasklist) {
   );
 }
 
-document.body.append(App());
+document.body.appendChild(App());
