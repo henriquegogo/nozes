@@ -7,12 +7,6 @@ const Forro = {};
       child.constructor === String || child.constructor === Number ? element.innerText = child :
       child.constructor !== Object ? element.appendChild(child) : null;
     });
-    element.updateChildren = function(update) {
-      [...update.children].forEach((child, i) => {
-        !child.isEqualNode(element.children[i]) && element.replaceChild(child, element.children[i]);
-      });
-      return element;
-    }
     return element;
   }
 });

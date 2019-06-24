@@ -6,7 +6,6 @@ function InputForm(add) {
     e.preventDefault();
     const { input_task } = e.target;
     add(input_task.value);
-    input_task.value = "";
   };
 
   return form({ onsubmit: handleSubmit },
@@ -14,7 +13,7 @@ function InputForm(add) {
       name: 'input_task',
       placeholder: 'Type a task',
       style: 'width: 476px',
-      autofocus: true
+      autofocus: true,
     }),
   );
 }
@@ -33,7 +32,8 @@ function App(tasklist) {
 
   const add = (text) => {
     tasklist.push(text);
-    app.updateChildren(App(tasklist));
+    app.replaceWith(app=App(tasklist));
+    app.querySelector('[name=input_task]').focus();
   }
 
   const reverse = () => {
