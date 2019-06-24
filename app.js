@@ -10,7 +10,7 @@ function InputForm(add) {
 
   return form({ id: 'form_task', onsubmit: handleSubmit },
     input({
-      name: 'input_task',
+      id: 'input_task',
       placeholder: 'Type a task',
       style: 'width: 476px',
       autofocus: true,
