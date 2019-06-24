@@ -7,6 +7,9 @@ const Forro = {};
       child.constructor === String || child.constructor === Number ? element.innerText = child :
       child.constructor !== Object ? element.appendChild(child) : null;
     });
+    element.replaceWith = element.replaceWith || function(update) { // Polyfill
+      return element.parentNode.replaceChild(update, element);
+    }
     return element;
   }
 });
