@@ -13,8 +13,8 @@ function InputForm(add) {
       id: 'input_task',
       placeholder: 'Type a task',
       style: 'width: 476px',
-      autofocus: true,
-    }),
+      autofocus: true
+    })
   );
 }
 
@@ -46,8 +46,8 @@ function App(tasklist) {
     tasks=Tasks(tasklist),
     div(
       button({ style: 'float: right', onclick: reverse }, 'Reverse'),
-      b('Total: '), span(tasklist.length),
-    ),
+      b('Total: '), span(tasklist.length)
+    )
   );
 }
 
