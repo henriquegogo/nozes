@@ -1,5 +1,5 @@
-import Forro from './forro.js';
-const { div, h1, form, input, ul, li, button, b, span } = Forro;
+import Nozes from './nozes.js';
+const { div, h1, form, input, ul, li, button, b, span } = Nozes;
 
 function InputForm(add) {
   const handleSubmit = (e) => {
