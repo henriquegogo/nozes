@@ -34,7 +34,7 @@ function App(props) {
 
 document.body.appendChild(App());
 ```
-More examples in 'example' folder
+More examples in 'examples' folder
 
 ## Why 'Nozes'?
 It's a joke, an old brazilian meme called "As árvores somos nozes", that could be translated as "The tree are us". Nozes it's about DOM tree.
