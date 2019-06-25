@@ -1,4 +1,4 @@
-import Nozes from './nozes.js';
+import Nozes from '../nozes.js';
 const { div, h1, form, input, ul, li, button, b, span } = Nozes;
 
 function InputForm(add) {
