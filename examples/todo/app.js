@@ -1,5 +1,5 @@
 import Nozes from '../../nozes.js';
-const { div, h1, form, input, ul, li, button, b, span } = Nozes;
+const { div, h1, form, input, ul, li, button, b, span, a } = Nozes;
 
 function InputForm(add) {
   const handleSubmit = (e) => {
@@ -18,10 +18,13 @@ function InputForm(add) {
   );
 }
 
-function Tasks(tasklist) {
+function Tasks(tasklist, remove) {
   return ul(
-    ...tasklist.map(text =>
-      li(text)
+    ...tasklist.map((text, i) =>
+      li(
+        text,
+        a({ style: 'float: right', onclick: () => remove(i) }, 'X')
+      )
     )
   );
 }
@@ -36,14 +39,19 @@ function App(tasklist) {
     app.children.form_task.input_task.focus();
   }
 
+  const remove = (i) => {
+    tasklist.splice(i,1);
+    app.replaceWith(app=App(tasklist));
+  }
+
   const reverse = () => {
-    tasks.replaceWith(tasks=Tasks(tasklist.reverse()));
+    tasks.replaceWith(tasks=Tasks(tasklist.reverse(), remove));
   }
 
   return app=div(
     h1('Todo List'),
     InputForm(add),
-    tasks=Tasks(tasklist),
+    tasks=Tasks(tasklist, remove),
     div(
       button({ style: 'float: right', onclick: reverse }, 'Reverse'),
       b('Total: '), span(tasklist.length)
