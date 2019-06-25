@@ -18,12 +18,12 @@ function InputForm(add) {
   );
 }
 
-function Tasks(tasklist, remove) {
+function Tasks(tasklist) {
   return ul(
     ...tasklist.map((text, i) =>
       li(
         text,
-        a({ style: 'float: right', onclick: () => remove(i) }, 'X')
+        a({ style: 'float: right', onclick: () => tasklist.remove(i) }, 'X')
       )
     )
   );
@@ -45,13 +45,15 @@ function App(tasklist) {
   }
 
   const reverse = () => {
-    tasks.replaceWith(tasks=Tasks(tasklist.reverse(), remove));
+    tasks.replaceWith(tasks=Tasks(tasklist.reverse()));
   }
+
+  tasklist.remove = remove;
 
   return app=div(
     h1('Todo List'),
     InputForm(add),
-    tasks=Tasks(tasklist, remove),
+    tasks=Tasks(tasklist),
     div(
       button({ style: 'float: right', onclick: reverse }, 'Reverse'),
       b('Total: '), span(tasklist.length)
