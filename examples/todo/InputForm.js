@@ -1,11 +1,12 @@
 import Nozes from '../../nozes.js';
-import { events } from './index.js';
+import { store, events } from './index.js';
 
 const { form, input } = Nozes;
 
 function InputForm() {
   const handleChange = e => {
-    events.emit('add', e.target.value);
+    store.tasklist.push(e.target.value);
+    events.emit('add');
     e.target.value = '';
   };
 

@@ -6,8 +6,7 @@ const { ul, li, a } = Nozes;
 function Tasks() {
   let me;
 
-  events.on('add', text => {
-    store.tasklist.push(text);
+  events.on('add', () => {
     me.replaceWith(me=Tasks());
   });
 
