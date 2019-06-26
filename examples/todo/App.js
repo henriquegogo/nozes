@@ -36,4 +36,4 @@ function App(tasklist) {
   );
 }
 
-document.body.appendChild(App());
+export default App;
