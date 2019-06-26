@@ -1,21 +1,21 @@
 import Nozes from '../../nozes.js';
+import { events } from './index.js';
+
 const { form, input } = Nozes;
 
-function InputForm(add) {
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const { input_task } = e.target;
-    add(input_task.value);
+function InputForm() {
+  const handleChange = e => {
+    events.emit('add', e.target.value);
+    e.target.value = '';
   };
 
-  return form({ id: 'form_task', onsubmit: handleSubmit },
-    input({
-      id: 'input_task',
-      placeholder: 'Type a task',
-      style: 'width: 476px',
-      autofocus: true
-    })
-  );
+  return input({
+    id: 'task',
+    placeholder: 'Type a task',
+    style: 'width: 476px',
+    onchange: handleChange,
+    autofocus: true
+  });
 }
 
 export default InputForm;
