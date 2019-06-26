@@ -1,19 +1,16 @@
 import App from './App.js';
 
-export const events = (function() {
-  const container = document.createDocumentFragment();
-  const listeners = {};
-  return {
-    on: function(name, callback) {
-      function handler(e) { callback(e.detail) }
-      container.removeEventListener(name, listeners[callback.toString()+name]);
-      container.addEventListener(name, handler);
-      listeners[callback.toString()+name] = handler;
-    }, 
-    off: container.removeEventListener,
-    emit: function(name, data) { container.dispatchEvent(new CustomEvent(name, {detail: data})) }
-  };
-})();
+const container = document.createDocumentFragment();
+const listeners = {};
+
+export function when(events, element, func) {
+  events.split(' ').forEach(name => container.addEventListener(name, () => element.replaceWith(element=func())));
+  return element;
+}
+
+export function dispatch(name, data) {
+  container.dispatchEvent(new CustomEvent(name));
+}
 
 export const store = { tasklist: [] };
 
