@@ -29,6 +29,13 @@ function Tasks(tasklist) {
   );
 }
 
+function Footer(tasklist) {
+  return div(
+    button({ style: 'float: right', onclick: tasklist.invert }, 'Reverse'),
+    b('Total: '), span(tasklist.length)
+  )
+}
+
 function App(tasklist) {
   let app, tasks;
   tasklist = tasklist || [];
@@ -44,20 +51,18 @@ function App(tasklist) {
     app.replaceWith(app=App(tasklist));
   }
 
-  const reverse = () => {
+  const invert = () => {
     tasks.replaceWith(tasks=Tasks(tasklist.reverse()));
   }
 
   tasklist.remove = remove;
+  tasklist.invert = invert;
 
   return app=div(
     h1('Todo List'),
     InputForm(add),
     tasks=Tasks(tasklist),
-    div(
-      button({ style: 'float: right', onclick: reverse }, 'Reverse'),
-      b('Total: '), span(tasklist.length)
-    )
+    Footer(tasklist)
   );
 }
 
