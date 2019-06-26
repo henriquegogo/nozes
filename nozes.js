@@ -11,3 +11,20 @@ const Nozes = {};
   }
 });
 export default Nozes;
+
+const container = document.createDocumentFragment();
+
+export function watch(events, func) {
+  return (...props) => {
+    let element = func(...props);
+    events.split(' ').forEach(name => container.addEventListener(name, () => {
+      const updated = func(...props);
+      if (!element.isEqualNode(updated)) element.replaceWith(element=updated);
+    }));
+    return element;
+  }
+}
+
+export function dispatch(name, data) {
+  container.dispatchEvent(new CustomEvent(name));
+}

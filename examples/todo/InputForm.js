@@ -1,17 +1,16 @@
-import Nozes from '../../nozes.js';
-import { store, dispatch } from './index.js';
+import Nozes, { watch, dispatch } from '../../nozes.js';
+import { store } from './index.js';
 
 const { form, input } = Nozes;
 
 function InputForm() {
   const handleChange = e => {
     store.tasklist.push(e.target.value);
-    dispatch('add');
+    dispatch('tasklist');
     e.target.value = '';
   };
 
   return input({
-    id: 'task',
     placeholder: 'Type a task',
     style: 'width: 476px',
     onchange: handleChange,
@@ -19,4 +18,4 @@ function InputForm() {
   });
 }
 
-export default InputForm;
+export default watch('tasklist', InputForm);
