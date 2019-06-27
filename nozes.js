@@ -25,6 +25,6 @@ export function watch(events, func) {
   }
 }
 
-export function dispatch(name, data) {
-  container.dispatchEvent(new CustomEvent(name));
+export function dispatch(events) {
+  events.split(' ').forEach(name => container.dispatchEvent(new Event(name)));
 }
