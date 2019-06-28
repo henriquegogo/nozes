@@ -1,34 +1,75 @@
 # Nozes
-It's just a simpler way to create elements instead of use document.createElement()
+Declarative way to create plain javascript components
 
 ## How to use
 ```javascript
 div(
   h1('Hello, world'),
-  a({ href='#' }, 'Click here')
+  a({ href: '#', onclick: function() { alert('clicked') } }, 'Click here')
 )
 ```
+All div(), h1(), a() and other "html tag" functions are just an easier way to return a document.createElement() and set parameters and attributes.
 
-## It's just that?
-Yes. But you can do awesome things, like create plain javascript reactive components.
+## Watch and dispatch
 ```javascript
-import Nozes from './nozes.js';
-const { div, h1, button, b } = Nozes;
+document.body.appendChild(
+  watch('notify sayHello', function() {
+    return div('Hello, world');
+  });
+);
+```
+The "watch" function can be used to attach an "element updater" event. It's just a wrapper for a function that return an Element that update its reference every time "dispatch" is called. You can use multiple watch/dispatch events just with spaces between them.
+```javascript
+dispatch('notify');
+```
 
-function App(props) {
-  let app;
-  props = props || {};
+## Full example
+```javascript
+// Message.js
+import { store } from './App.js';
+import Nozes, { watch } from './nozes.js';
+const { div, b, span } = Nozes;
 
-  const alert = () => {
-    app.replaceWith(app=App({ message: 'Hello, world' }));
+function Message() {
+  return div(
+    b('Message: '),
+    span(store.message)
+  );
+}
+
+export default watch('notify', Message);
+```
+```javascript
+// Notifier.js
+import { store } from './App.js';
+import Nozes, { dispatch } from './nozes.js';
+const { button } = Nozes;
+
+function Notifier() {
+  const handleClick = () => {
+    store.message = 'you are notified';
+    dispatch('notify');
   }
 
-  return app=div(
-    h1(props.message || 'No message'),
-    div(
-      b('Messenger: '),
-      button({ onclick: alert }, 'Say something'),
-    )
+  return button('Notify message');
+}
+
+export default Notifier;
+```
+```javascript
+// App.js
+import Nozes from './nozes.js';
+import Message from './Message.js';
+import Notifier from './Notifier.js';
+const { div, h1 } = Nozes;
+
+export const store = { message: 'no message' };
+
+function App() {
+  return div(
+    h1('Messenger'),
+    Notifier(),
+    Message()
   );
 }
 
@@ -40,7 +81,7 @@ More examples in 'examples' folder
 It's a joke, an old brazilian meme called "As árvores somos nozes", that could be translated as "The tree are us". Nozes it's about DOM tree.
 
 ## Special thanks
-Bruno Facundo <http://github.com/BrunoFacundo> that tested first implementations, suggested improves and did pair programming on "watch" and "dispatch" implementations.
+(Bruno Facundo)[http://github.com/BrunoFacundo] that tested first implementations, suggested improves and did pair programming on "watch" and "dispatch" implementations.
 
 ## License
 MIT
