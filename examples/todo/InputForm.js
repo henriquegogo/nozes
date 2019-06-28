@@ -1,12 +1,10 @@
 import Nozes, { watch, dispatch } from '../../nozes.js';
-import { store } from './index.js';
-
 const { form, input } = Nozes;
 
-function InputForm() {
+function InputForm(tasklist = []) {
   const handleChange = e => {
-    store.tasklist.push(e.target.value);
-    dispatch('tasklist');
+    tasklist.push(e.target.value);
+    dispatch('tasklist', tasklist);
     e.target.value = '';
   };
 

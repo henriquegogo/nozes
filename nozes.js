@@ -22,9 +22,7 @@ export function watch(events, func) {
     var element = func.apply(null, props);
     events.split(' ').forEach(function(name) {
       container.addEventListener(name, function(e) {
-        if (e.detail && props[0]) {
-          props[0] = props[0].constructor === Object ? Object.assign(props[0], e.detail) : e.detail;
-        }
+        props[0] = props[0] && props[0].constructor === Object ? Object.assign(props[0], e.detail) : e.detail;
         var updated = func.apply(null, props);
         if (!element.isEqualNode(updated)) {
           element.parentNode.replaceChild(updated, element);

@@ -1,5 +1,4 @@
 import Nozes from '../../nozes.js';
-
 import InputForm from './InputForm.js';
 import Tasks from './Tasks.js';
 import Footer from './Footer.js';

@@ -26,14 +26,13 @@ dispatch('notify');
 ## Full example
 ```javascript
 // Message.js
-import { store } from './App.js';
-import Nozes, { watch } from './nozes.js';
+import Nozes, { watch } from '../../nozes.js';
 const { div, b, span } = Nozes;
 
-function Message() {
+function Message(message) {
   return div(
     b('Message: '),
-    span(store.message)
+    span(message)
   );
 }
 
@@ -41,14 +40,12 @@ export default watch('notify', Message);
 ```
 ```javascript
 // Notifier.js
-import { store } from './App.js';
-import Nozes, { dispatch } from './nozes.js';
+import Nozes, { dispatch } from '../../nozes.js';
 const { button } = Nozes;
 
 function Notifier() {
   const handleClick = () => {
-    store.message = 'you are notified';
-    dispatch('notify');
+    dispatch('notify', 'you are notified');
   }
 
   return button({ onclick: handleClick }, 'Notify message');
@@ -58,18 +55,16 @@ export default Notifier;
 ```
 ```javascript
 // App.js
-import Nozes from './nozes.js';
+import Nozes from '../../nozes.js';
 import Message from './Message.js';
 import Notifier from './Notifier.js';
 const { div, h1 } = Nozes;
-
-export const store = { message: 'no message' };
 
 function App() {
   return div(
     h1('Messenger'),
     Notifier(),
-    Message()
+    Message('no message yet')
   );
 }
 
