@@ -1,12 +1,10 @@
 // Notifier.js
-import { store } from './App.js';
 import Nozes, { dispatch } from '../../nozes.js';
 const { button } = Nozes;
 
 function Notifier() {
   const handleClick = () => {
-    store.message = 'you are notified';
-    dispatch('notify');
+    dispatch('notify', 'you are notified');
   }
 
   return button({ onclick: handleClick }, 'Notify message');

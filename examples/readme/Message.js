@@ -1,12 +1,12 @@
 // Message.js
-import { store } from './App.js';
 import Nozes, { watch } from '../../nozes.js';
 const { div, b, span } = Nozes;
 
-function Message() {
+function Message(message, outra) {
+  console.log(message, outra);
   return div(
     b('Message: '),
-    span(store.message)
+    span(message)
   );
 }
 

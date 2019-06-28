@@ -18,11 +18,14 @@ export default Nozes;
 var container = document.createDocumentFragment();
 export function watch(events, func) {
   return function() {
-    var props = arguments;
-    var element = func(props);
+    var props = [].slice.call(arguments);
+    var element = func.apply(null, props);
     events.split(' ').forEach(function(name) {
-      container.addEventListener(name, function() {
-        var updated = func(props);
+      container.addEventListener(name, function(e) {
+        if (e.detail && props[0]) {
+          props[0] = props[0].constructor === Object ? Object.assign(props[0], e.detail) : e.detail;
+        }
+        var updated = func.apply(null, props);
         if (!element.isEqualNode(updated)) {
           element.parentNode.replaceChild(updated, element);
           element = updated;
@@ -32,8 +35,8 @@ export function watch(events, func) {
     return element;
   }
 }
-export function dispatch(events) {
+export function dispatch(events, props) {
   events.split(' ').forEach(function(name) {
-    container.dispatchEvent(new Event(name));
+    container.dispatchEvent(new CustomEvent(name, { detail: props }));
   });
 }
