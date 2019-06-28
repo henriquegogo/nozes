@@ -8,7 +8,7 @@ function App() {
   return div(
     h1('Messenger'),
     Notifier(),
-    Message('no message', 'no other')
+    Message('no message yet')
   );
 }
 
