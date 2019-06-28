@@ -6,9 +6,11 @@ function InputForm(tasklist = []) {
     tasklist.push(e.target.value);
     dispatch('tasklist', tasklist);
     e.target.value = '';
+    window.inputTask.focus();
   };
 
   return input({
+    id: 'inputTask',
     placeholder: 'Type a task',
     style: 'width: 476px',
     onchange: handleChange,
