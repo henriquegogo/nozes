@@ -51,7 +51,7 @@ function Notifier() {
     dispatch('notify');
   }
 
-  return button('Notify message');
+  return button({ onclick: handleClick }, 'Notify message');
 }
 
 export default Notifier;
