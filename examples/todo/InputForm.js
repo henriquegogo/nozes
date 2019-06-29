@@ -1,5 +1,5 @@
 import Nozes, { watch, dispatch } from '../../nozes.js';
-const { form, input } = Nozes;
+const { input } = Nozes;
 
 function InputForm(tasklist = []) {
   const handleChange = e => {
