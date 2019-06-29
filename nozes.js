@@ -29,6 +29,7 @@ export function watch(events, func) {
           element.parentNode.replaceChild(updated, element);
           element = updated;
         }
+        element.onreset && element.onreset();
       });
     });
     return element;

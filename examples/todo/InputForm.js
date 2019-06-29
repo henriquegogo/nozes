@@ -5,15 +5,14 @@ function InputForm(tasklist = []) {
   const handleChange = e => {
     tasklist.push(e.target.value);
     dispatch('tasklist', tasklist);
-    window.inputTask.focus();
   };
 
   return input({
-    id: 'inputTask',
     placeholder: 'Type a task',
     style: 'width: 476px',
+    autofocus: true,
     onchange: handleChange,
-    autofocus: true
+    onreset: function() { this.focus() }
   });
 }
 
