@@ -25,7 +25,7 @@ export function watch(events, func) {
       container.addEventListener(name, function(e) {
         props[0] = props[0] && props[0].constructor === Object ? Object.assign(props[0], e.detail) : e.detail;
         var updated = func.apply(null, props);
-        if (element != null && !element.isEqualNode(updated) || element != null && e.detail != null) {
+        if (element != null && element.parentNode && (!element.isEqualNode(updated) || e.detail != null)) {
           element.parentNode.replaceChild(updated, element);
           element = updated;
         }
