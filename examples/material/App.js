@@ -1,11 +1,14 @@
 import Nozes from '../../nozes.js';
-import { Container } from './Components.js';
-
-const { h1 } = Nozes;
+import { Appbar, Container, Button } from './Components.js';
+const { div, h1 } = Nozes;
 
 function App() {
-  return Container(
-    h1('Material Design')
+  return div(
+    Appbar('Application title'),
+    Container(
+      h1('Material Design'),
+      Button('Click'), Button({ type: 'primary raised' }, 'Click'), Button({ type: 'danger fab' }, '+')
+    )
   );
 }
 
