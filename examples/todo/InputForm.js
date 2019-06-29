@@ -5,7 +5,6 @@ function InputForm(tasklist = []) {
   const handleChange = e => {
     tasklist.push(e.target.value);
     dispatch('tasklist', tasklist);
-    e.target.value = '';
     window.inputTask.focus();
   };
 
