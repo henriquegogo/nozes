@@ -1,5 +1,5 @@
 import Nozes from '../../nozes.js';
-import { Appbar, Container, Button } from './Components.js';
+import { Appbar, Caret, Container, Button, Divider, Dropdown } from './Components.js';
 const { div, h1 } = Nozes;
 
 function App() {
@@ -7,7 +7,10 @@ function App() {
     Appbar('Application title'),
     Container(
       h1('Material Design'),
-      Button('Click'), Button({ type: 'primary raised' }, 'Click'), Button({ type: 'danger fab' }, '+')
+      Caret(),
+      Button('Click'), Button({ type: 'primary raised' }, 'Click'), Button({ type: 'danger fab' }, '+'),
+      Divider(),
+      Dropdown('Options', ['First option', 'Second option', 'Third'])
     )
   );
 }
