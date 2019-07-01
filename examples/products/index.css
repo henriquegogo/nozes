@@ -9,6 +9,7 @@
 
 html {
   font-family: 'Raleway', sans-serif;
+  color: #444;
   background: #FFF;
 }
 body {
@@ -24,16 +25,16 @@ section {
 }
 header {
   padding: 10px 0;
+  font-size: 16px;
   border-bottom: 1px solid #DDD;
 }
 header section {
   display: table;
-  padding: 0;
-  width: 100%;
+  width: calc(100% - 20px);
 }
 header section > * {
   display: table-cell;
-  padding: 0 20px;
+  padding-right: 20px;
 }
 header section > *:last-child {
   text-align: right;

@@ -1,12 +1,13 @@
 import Nozes from '../../nozes.js';
-const { div, main, footer } = Nozes;
+const { div, footer } = Nozes;
 
 import Header from './components/Header.js';
+import Main from './components/Main.js';
 
 function App() {
   return div(
     Header(),
-    main(),
+    Main(),
     footer()
   );
 }
