@@ -2,7 +2,7 @@ import Nozes, { watch, dispatch } from '../../nozes.js';
 const { ul, li, a } = Nozes;
 
 function Tasks(tasklist = []) {
-  const remove = i => {
+  function remove(i) {
     tasklist.splice(i, 1);
     dispatch('tasklist', tasklist);
   };
