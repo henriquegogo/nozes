@@ -5,7 +5,7 @@ function Tasks(tasklist = []) {
   function remove(i) {
     tasklist.splice(i, 1);
     dispatch('tasklist', tasklist);
-  };
+  }
 
   return ul(
     ...tasklist.map((text, i) =>

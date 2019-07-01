@@ -2,9 +2,9 @@ import Nozes, { watch, dispatch } from '../../nozes.js';
 const { div, button, b, span } = Nozes;
 
 function Footer(tasklist = []) {
-  const reverse = () => {
+  function reverse() {
     dispatch('tasklist', tasklist.reverse());
-  };
+  }
 
   return div(
     button({ style: 'float: right', onclick: reverse }, 'Reverse'),
