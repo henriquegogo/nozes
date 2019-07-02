@@ -4,9 +4,9 @@ const { header, section, div, h1, input, i, label, span } = Nozes;
 function Header() {
   return header(
     section(
-      h1('SHOPPING'),
+      h1('SHOPPS'),
       label(
-        input({ type: 'search', placeholder: 'Estou procurando...' }),
+        input({ type: 'text', placeholder: 'Estou procurando...' }),
         i({ className: 'icon search-icon' }, 'search')
       ),
       div(

@@ -46,9 +46,9 @@ header label .icon {
   margin-left: -34px;
   color: #BBB;
 }
-header input[type=search] {
-  padding: 0 30px 0 15px;
-  width: 100%;
+header input[type=text] {
+  padding: 0 40px 0 15px;
+  width: calc(100% - 60px);
   height: 45px;
   line-height: 1.25em;
   background: #f7f7f7;
