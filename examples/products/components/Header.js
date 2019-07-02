@@ -11,7 +11,7 @@ function Header() {
       ),
       div(
         i({ className: 'icon' }, 'perm_identity'),
-        span('User data')
+        span('Henrique')
       )
     )
   );

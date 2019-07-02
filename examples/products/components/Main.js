@@ -1,9 +1,14 @@
 import Nozes from '../../../nozes.js';
-const { section } = Nozes;
+const { main, section, span } = Nozes;
+
+import Categories from './Categories.js';
 
 function Main() {
-  return section(
-    'Content'
+  return main(
+    section(
+      Categories(),
+      span('Nada')
+    )
   );
 }
 
