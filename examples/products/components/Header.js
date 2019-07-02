@@ -10,8 +10,7 @@ function Header() {
         i({ className: 'icon search-icon' }, 'search')
       ),
       div(
-        i({ className: 'icon' }, 'perm_identity'),
-        span('Henrique')
+        i({ className: 'icon' }, 'perm_identity')
       )
     )
   );
