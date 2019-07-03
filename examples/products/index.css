@@ -27,7 +27,7 @@ a:hover {
 }
 section {
   margin: 0 auto;
-  padding: 0 20px;
+  width: calc(100% - 40px);
   max-width: 1300px;
 }
 
@@ -38,14 +38,14 @@ header {
 }
 header section {
   display: table;
-  width: calc(100% - 20px);
 }
 header section > * {
   display: table-cell;
-  padding-right: 20px;
+  padding-right: 10px;
 }
 header section > *:last-child {
   text-align: right;
+  padding-right: 0;
 }
 header * {
   vertical-align: middle;
@@ -93,4 +93,20 @@ main {
   margin: 0 auto;
   margin-bottom: 10px;
   --border-radius: 50px;
+}
+
+.products {
+  padding: 0;
+}
+.products li {
+  display: inline-block;
+  width: calc(50% - 52px);
+  margin: 10px 0;
+  padding: 20px;
+  list-style: none;
+  border: 1px solid #DDD;
+  border-radius: 7px;
+}
+.products li:nth-child(even) {
+  margin-left: 20px;
 }
