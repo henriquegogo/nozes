@@ -71,6 +71,7 @@ main {
 .categories {
   width: 100%;
   margin-bottom: 40px;
+  padding-bottom: 10px;
   text-align: center;
   white-space: nowrap;
   overflow: auto;
@@ -78,7 +79,7 @@ main {
 .categories a {
   display: inline-block;
   margin: 0 20px;
-  width: 100px;
+  width: 108px;
   text-align: center;
   vertical-align: top;
   white-space: normal;
