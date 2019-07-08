@@ -3,41 +3,11 @@ const { div, span, img, a } = Nozes;
 
 function Categories() {
   return div({ className: 'categories' },
-    a({ href: '#' },
-      img({ src: celulares }),
-      span('Celulares e Telefones')
-    ),
-    a({ href: '#' },
-      img({ src: brinquedos }),
-      span('Brinquedos')
-    ),
-    a({ href: '#' },
-      img({ src: informatica }),
-      span('Informática')
-    ),
-    a({ href: '#' },
-      img({ src: som }),
-      span('Som e Áudio')
-    ),
-    a({ href: '#' },
-      img({ src: eletroportateis }),
-      span('Eletroportáteis')
-    ),
-    a({ href: '#' },
-      img({ src: decoracao }),
-      span('Decoração')
-    ),
-    a({ href: '#' },
-      img({ src: moda }),
-      span('Moda e Beleza')
-    ),
-    a({ href: '#' },
-      img({ src: livros }),
-      span('Jogos, Livros e Filmes')
-    ),
-    a({ href: '#' },
-      img({ src: papelaria }),
-      span('Papelaria e Escritório')
+    ...list.map(item =>
+      a({ href: '#' },
+        img({ src: item.img }),
+        span(item.label)
+      )
     )
   );
 }
@@ -53,3 +23,16 @@ const decoracao = 'https://www.e-cadeiras.com.br/ccstore/v1/images/?source=/file
 const moda = 'https://http2.mlstatic.com/vestido-xadrez-roupas-femininas-pronta-entrega-D_NQ_NP_697104-MLB27236349465_042018-Q.jpg';
 const livros = 'https://openbookphilly.com/wp-content/uploads/2016/11/bookstack.png';
 const papelaria = 'https://res-2.cloudinary.com/gaveteiro/image/upload/c_fit,h_1000,w_1000/v1432168667/mqosegda7m4oywj4m6ag.jpg';
+
+const list = [
+  { img: celulares, label: 'Celulares e Telefones' },
+  { img: brinquedos, label: 'Brinquedos' },
+  { img: informatica, label: 'Informática' },
+  { img: som, label: 'Som e Áudio' },
+  { img: eletroportateis, label: 'Eletroportáteis' },
+  { img: decoracao, label: 'Decoração' },
+  { img: moda, label: 'Moda e Beleza' },
+  { img: livros, label: 'Jogos, Livros e Filmes' },
+  { img: papelaria, label: 'Papelaria e Escritório' }
+];
+
