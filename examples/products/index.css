@@ -98,15 +98,24 @@ main {
 .products {
   padding: 0;
 }
-.products li {
+.products img {
+  float: right;
+  width: 100px;
+  margin: 0 0 10px 10px;
+}
+.products h4 {
+  margin-top: 0;
+}
+.products a {
   display: inline-block;
   width: calc(50% - 52px);
+  min-width: 100px;
   margin: 10px 0;
   padding: 20px;
   list-style: none;
   border: 1px solid #DDD;
   border-radius: 7px;
 }
-.products li:nth-child(even) {
+.products a:nth-child(even) {
   margin-left: 20px;
 }
