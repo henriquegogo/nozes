@@ -5,8 +5,8 @@ function ProductsList() {
   return div(
     h1('Novidades'),
     div({ className: 'products' },
-      ...list.map(item =>
-        a({ href: '#' },
+      ...list.map((item, i) =>
+          a({ href: '#/product/' + (i+1) },
           img({ src: item.img }),
           h4(item.title),
           span(item.description)

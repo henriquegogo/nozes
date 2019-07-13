@@ -4,7 +4,7 @@ const { div, span, img, a } = Nozes;
 function Categories() {
   return div({ className: 'categories' },
     ...list.map(item =>
-      a({ href: '#' },
+      a({ href: '#/category/' + item.id },
         img({ src: item.img }),
         span(item.label)
       )
@@ -25,14 +25,14 @@ const livros = 'https://openbookphilly.com/wp-content/uploads/2016/11/bookstack.
 const papelaria = 'https://res-2.cloudinary.com/gaveteiro/image/upload/c_fit,h_1000,w_1000/v1432168667/mqosegda7m4oywj4m6ag.jpg';
 
 const list = [
-  { img: celulares, label: 'Celulares e Telefones' },
-  { img: brinquedos, label: 'Brinquedos' },
-  { img: informatica, label: 'Informática' },
-  { img: som, label: 'Som e Áudio' },
-  { img: eletroportateis, label: 'Eletroportáteis' },
-  { img: decoracao, label: 'Decoração' },
-  { img: moda, label: 'Moda e Beleza' },
-  { img: livros, label: 'Jogos, Livros e Filmes' },
-  { img: papelaria, label: 'Papelaria e Escritório' }
+  { id: 'celulares', img: celulares, label: 'Celulares e Telefones' },
+  { id: 'brinquedos', img: brinquedos, label: 'Brinquedos' },
+  { id: 'informatica', img: informatica, label: 'Informática' },
+  { id: 'som', img: som, label: 'Som e Áudio' },
+  { id: 'eletroportateis', img: eletroportateis, label: 'Eletroportáteis' },
+  { id: 'decoracao', img: decoracao, label: 'Decoração' },
+  { id: 'moda', img: moda, label: 'Moda e Beleza' },
+  { id: 'livros', img: livros, label: 'Jogos, Livros e Filmes' },
+  { id: 'papelaria', img: papelaria, label: 'Papelaria e Escritório' }
 ];
 
