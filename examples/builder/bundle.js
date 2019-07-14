@@ -19,6 +19,36 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
   });
 
   var container = document.createDocumentFragment();
+  function watch(events, func) {
+    return function () {
+      var props = [].slice.call(arguments);
+      var element = func.apply(null, props);
+      events.split(' ').forEach(function (name) {
+        container.addEventListener(name, function (e) {
+          props[0] = props[0] && props[0].constructor === Object ? Object.assign(props[0], e.detail) : e.detail;
+          var updated = func.apply(null, props);
+          if (element != null && element.parentNode && (!element.isEqualNode(updated) || e.detail != null)) {
+            element.parentNode.replaceChild(updated, element);
+            element = updated;
+          }
+        });
+      });
+      return element;
+    };
+  }
+  function dispatch(events, props) {
+    events.split(' ').forEach(function (name) {
+      container.dispatchEvent(new CustomEvent(name, { detail: props }));
+    });
+  }
+
+  function router(routes) {
+    window.onhashchange = dispatch.bind(null, 'route');
+    return watch('route', function () {
+      var route = location.hash.split('/');
+      return route[1] && routes[route[1]] ? routes[route[1]](route[2]) : routes.index(route[2]);
+    })();
+  }
 
   var header = Nozes.header,
       section = Nozes.section,
@@ -42,7 +72,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
   function Categories() {
     return div$1.apply(undefined, [{ className: 'categories' }].concat(_toConsumableArray(list.map(function (item) {
-      return a({ href: '#' }, img({ src: item.img }), span$1(item.label));
+      return a({ href: '#/category/' + item.id }, img({ src: item.img }), span$1(item.label));
     }))));
   }
 
@@ -56,21 +86,27 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
   var livros = 'https://openbookphilly.com/wp-content/uploads/2016/11/bookstack.png';
   var papelaria = 'https://res-2.cloudinary.com/gaveteiro/image/upload/c_fit,h_1000,w_1000/v1432168667/mqosegda7m4oywj4m6ag.jpg';
 
-  var list = [{ img: celulares, label: 'Celulares e Telefones' }, { img: brinquedos, label: 'Brinquedos' }, { img: informatica, label: 'Informática' }, { img: som, label: 'Som e Áudio' }, { img: eletroportateis, label: 'Eletroportáteis' }, { img: decoracao, label: 'Decoração' }, { img: moda, label: 'Moda e Beleza' }, { img: livros, label: 'Jogos, Livros e Filmes' }, { img: papelaria, label: 'Papelaria e Escritório' }];
+  var list = [{ id: 'celulares', img: celulares, label: 'Celulares e Telefones' }, { id: 'brinquedos', img: brinquedos, label: 'Brinquedos' }, { id: 'informatica', img: informatica, label: 'Informática' }, { id: 'som', img: som, label: 'Som e Áudio' }, { id: 'eletroportateis', img: eletroportateis, label: 'Eletroportáteis' }, { id: 'decoracao', img: decoracao, label: 'Decoração' }, { id: 'moda', img: moda, label: 'Moda e Beleza' }, { id: 'livros', img: livros, label: 'Jogos, Livros e Filmes' }, { id: 'papelaria', img: papelaria, label: 'Papelaria e Escritório' }];
 
-  var ul = Nozes.ul,
-      li = Nozes.li,
+  var div$2 = Nozes.div,
+      a$1 = Nozes.a,
       img$1 = Nozes.img,
+      h1$1 = Nozes.h1,
+      h4 = Nozes.h4,
       span$2 = Nozes.span;
 
 
   function ProductsList() {
-    return ul.apply(undefined, [{ className: 'products' }].concat(_toConsumableArray(list$1.map(function (item) {
-      return li(img$1(item.img), span$2(item.label));
-    }))));
+    return div$2(h1$1('Novidades'), div$2.apply(undefined, [{ className: 'products' }].concat(_toConsumableArray(list$1.map(function (item, i) {
+      return a$1({ href: '#/product/' + (i + 1) }, img$1({ src: item.img }), h4(item.title), span$2(item.description));
+    })))));
   }
 
-  var list$1 = [{ img: '', label: 'Product 1' }, { img: '', label: 'Product 2' }, { img: '', label: 'Product 3' }, { img: '', label: 'Product 4' }, { img: '', label: 'Product 5' }, { img: '', label: 'Product 6' }, { img: '', label: 'Product 7' }, { img: '', label: 'Product 8' }, { img: '', label: 'Product 9' }];
+  var batom = 'https://cdn.shopify.com/s/files/1/1495/0402/products/1_be3b6eb3-dbdf-44ca-9c35-c5c4eff53e2e_grande.jpg';
+  var sabonete = 'https://jnj-content-lab.brightspotcdn.com/dims4/default/31d7d80/2147483647/strip/true/crop/2000x2000+0+0/resize/360x360!/quality/90/?url=https%3A%2F%2Fjnj-content-lab.brightspotcdn.com%2F5d%2F28%2Ff1bb2b1a493b86050d928f3dcff3%2Fj-babu-golden-new-pump.png';
+  var celular = 'https://4.imimg.com/data4/BB/RH/MY-15241145/multimedia-mobile-phone-500x500.jpg';
+
+  var list$1 = [{ img: batom, title: 'Product 1', description: 'Lorem ipsum sicut dixit dolor lamen ourives tchan' }, { img: sabonete, title: 'Product 2', description: 'Lorem ipsum sicut dixit dolor lamen ourives tchan' }, { img: celular, title: 'Product 3', description: 'Lorem ipsum sicut dixit dolor lamen ourives tchan' }, { img: batom, title: 'Product 4', description: 'Lorem ipsum sicut dixit dolor lamen ourives tchan' }, { img: sabonete, title: 'Product 5', description: 'Lorem ipsum sicut dixit dolor lamen ourives tchan' }, { img: celular, title: 'Product 6', description: 'Lorem ipsum sicut dixit dolor lamen ourives tchan' }, { img: batom, title: 'Product 7', description: 'Lorem ipsum sicut dixit dolor lamen ourives tchan' }, { img: sabonete, title: 'Product 8', description: 'Lorem ipsum sicut dixit dolor lamen ourives tchan' }, { img: celular, title: 'Product 9', description: 'Lorem ipsum sicut dixit dolor lamen ourives tchan' }];
 
   var main = Nozes.main,
       section$1 = Nozes.section;
@@ -80,12 +116,20 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
     return main(section$1(Categories(), ProductsList()));
   }
 
-  var div$2 = Nozes.div,
+  var div$3 = Nozes.div,
       footer = Nozes.footer;
 
 
   function App() {
-    return div$2(Header(), Main(), footer());
+    return div$3(Header(), router({
+      index: Main,
+      category: function category(param) {
+        return div$3('Category ' + param);
+      },
+      product: function product(param) {
+        return div$3('Product ' + param);
+      }
+    }), footer());
   }
 
   document.body.appendChild(App());
