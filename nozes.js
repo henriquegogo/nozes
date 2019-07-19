@@ -15,33 +15,33 @@ var Nozes = {};
 export default Nozes;
 
 export function watch(events, func) {
-  watch.listener = watch.listener || document.createDocumentFragment();
+  watch.listeners = watch.listeners || [];
   return function() {
     var props = [].slice.call(arguments);
     var element = func.apply(null, props);
     events.split(' ').forEach(function(name) {
-      watch.listener.addEventListener(name, function(e) {
-        props[0] = props[0] && props[0].constructor === Object ? Object.assign(props[0], e.detail) : e.detail;
+      watch.listeners.push({ name: name, action: function(msg) {
+        props[0] = props[0] && props[0].constructor === Object ? Object.assign(props[0], msg) : msg;
         var updated = func.apply(null, props);
-        if (element != null && element.parentNode && (!element.isEqualNode(updated) || e.detail != null)) {
+        if (element != null && element.parentNode && (!element.isEqualNode(updated) || msg != null)) {
           element.parentNode.replaceChild(updated, element);
           element = updated;
         }
-      });
+      }});
     });
     return element;
   }
 }
 export function dispatch(events, props) {
-  events.split(' ').forEach(function(name) {
-    watch.listener.dispatchEvent(new CustomEvent(name, { detail: props }));
+  watch.listeners.forEach(function(listener) {
+    events.split(' ').includes(listener.name) && listener.action(props);
   });
 }
 
 export function router(routes) {
-  window.onhashchange = dispatch.bind(null, 'route');
-  return watch('route', function() {
-    var route = location.hash.split('/');
-    return route[1] && routes[route[1]] ? routes[route[1]](route[2]) : routes.index(route[2]);
+  window.onhashchange = dispatch.bind(null, 'hashchange');
+  return watch('hashchange', function() {
+    var path = location.hash.split('/');
+    return path[1] && routes[path[1]] ? routes[path[1]](path[2]) : routes.index(path[2]);
   })();
 }
