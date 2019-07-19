@@ -37,7 +37,6 @@ export function dispatch(events, props) {
     events.split(' ').includes(listener.name) && listener.action(props);
   });
 }
-
 export function router(routes) {
   window.onhashchange = dispatch.bind(null, 'hashchange');
   return watch('hashchange', function() {
