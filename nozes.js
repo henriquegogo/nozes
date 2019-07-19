@@ -29,9 +29,8 @@ export function watch(events, func) {
   }
 }
 export function dispatch(events, props) {
-  watch.listeners.forEach(function(listener) {
-    events.split(' ').includes(listener.name) && listener.action(props);
-  });
+  events = events.split(' ');
+  watch.listeners.forEach(function(listener) { events.includes(listener.name) && listener.action(props) });
 }
 export function router(routes) {
   window.onhashchange = dispatch.bind(null, 'hashchange');
