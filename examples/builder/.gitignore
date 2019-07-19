@@ -1,3 +1,4 @@
 node_modules
 package-lock.json
 index.css
+bundle.js
