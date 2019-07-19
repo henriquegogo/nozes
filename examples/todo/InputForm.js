@@ -1,5 +1,5 @@
-import Nozes, { connect, dispatch } from '../../nozes.js';
-const { input } = Nozes;
+import Elements, { connect, dispatch } from '../../nozes.js';
+const { input } = Elements;
 
 function InputForm(tasklist = []) {
   function handleChange(e) {

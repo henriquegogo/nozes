@@ -1,8 +1,8 @@
 // App.js
-import Nozes from '../../nozes.js';
+import Elements from '../../nozes.js';
 import Message from './Message.js';
 import Notifier from './Notifier.js';
-const { div, h1 } = Nozes;
+const { div, h1 } = Elements;
 
 function App() {
   return div(

@@ -1,5 +1,5 @@
-import Nozes, { connect, dispatch } from '../../nozes.js';
-const { ul, li, a } = Nozes;
+import Elements, { connect, dispatch } from '../../nozes.js';
+const { ul, li, a } = Elements;
 
 function Tasks(tasklist = []) {
   function remove(i) {

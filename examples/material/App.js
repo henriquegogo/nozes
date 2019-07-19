@@ -1,6 +1,6 @@
-import Nozes from '../../nozes.js';
+import Elements from '../../nozes.js';
 import { Appbar, Caret, Container, Button, Divider, Dropdown } from './Components.js';
-const { div, h1 } = Nozes;
+const { div, h1 } = Elements;
 
 function App() {
   return div(

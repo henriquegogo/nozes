@@ -1,6 +1,6 @@
 // Message.js
-import Nozes, { connect } from '../../nozes.js';
-const { div, b, span } = Nozes;
+import Elements, { connect } from '../../nozes.js';
+const { div, b, span } = Elements;
 
 function Message(message) {
   return div(

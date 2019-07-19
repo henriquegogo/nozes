@@ -10,15 +10,15 @@ export default 'a abbr address area article aside b base bdi bdo blockquote body
   };
   return result;
 }, {});
-export function watch(events, action) {
+export function watch(events, func) {
   watch.listeners = watch.listeners || [];
   events.split(' ').forEach(function(name) {
-    watch.listeners.push({ name: name, action: action });
+    watch.listeners.push({ event: name, action: func });
   });
 }
-export function dispatch(events, props) {
+export function dispatch(events, arg) {
   events = events.split(' ');
-  watch.listeners.forEach(function(listener) { events.includes(listener.name) && listener.action(props) });
+  watch.listeners.forEach(function(listener) { events.includes(listener.event) && listener.action(arg) });
 }
 export function connect(events, func) {
   return function() {

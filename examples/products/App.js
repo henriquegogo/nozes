@@ -1,5 +1,5 @@
-import Nozes, { router } from '../../nozes.js';
-const { div, footer } = Nozes;
+import Elements, { router } from '../../nozes.js';
+const { div, footer } = Elements;
 
 import Header from './components/Header.js';
 import Main from './components/Main.js';

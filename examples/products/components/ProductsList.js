@@ -1,5 +1,5 @@
-import Nozes from '../../../nozes.js';
-const { div, a, img, h1, h4, span } = Nozes;
+import Elements from '../../../nozes.js';
+const { div, a, img, h1, h4, span } = Elements;
 
 function ProductsList() {
   return div(

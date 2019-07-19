@@ -1,9 +1,9 @@
-import Nozes, { watch } from '../../nozes.js';
+import Elements, { watch } from '../../nozes.js';
 import InputForm from './InputForm.js';
 import Tasks from './Tasks.js';
 import Footer from './Footer.js';
 
-const { div, h1 } = Nozes;
+const { div, h1 } = Elements;
 
 function App() {
   watch('tasklist log', console.log);

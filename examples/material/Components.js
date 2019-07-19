@@ -1,5 +1,5 @@
-import Nozes from '../../nozes.js';
-const { div, button, span, ul, li, a } = Nozes;
+import Elements from '../../nozes.js';
+const { div, button, span, ul, li, a } = Elements;
 
 export function Appbar() {
   return div({ className: 'mui-appbar mui--appbar-line-height' }, ...arguments);

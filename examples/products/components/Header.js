@@ -1,5 +1,5 @@
-import Nozes from '../../../nozes.js';
-const { header, section, div, h1, input, i, label, span } = Nozes;
+import Elements from '../../../nozes.js';
+const { header, section, div, h1, input, i, label, span } = Elements;
 
 function Header() {
   return header(

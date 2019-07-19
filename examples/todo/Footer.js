@@ -1,5 +1,5 @@
-import Nozes, { connect, dispatch } from '../../nozes.js';
-const { div, button, b, span } = Nozes;
+import Elements, { connect, dispatch } from '../../nozes.js';
+const { div, button, b, span } = Elements;
 
 function Footer(tasklist = []) {
   function reverse() {
