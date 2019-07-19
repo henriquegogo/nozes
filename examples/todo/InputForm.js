@@ -1,4 +1,4 @@
-import Nozes, { watch, dispatch } from '../../nozes.js';
+import Nozes, { connect, dispatch } from '../../nozes.js';
 const { input } = Nozes;
 
 function InputForm(tasklist = []) {
@@ -17,4 +17,4 @@ function InputForm(tasklist = []) {
   });
 }
 
-export default watch('tasklist', InputForm);
+export default connect('tasklist', InputForm);

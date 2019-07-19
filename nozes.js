@@ -10,32 +10,35 @@ export default "a abbr address area article aside b base bdi bdo blockquote body
   };
   return result;
 }, {});
-export function watch(events, func) {
-  watch.listeners = watch.listeners || [];
+export function connect(events, func) {
   return function() {
     var props = [].slice.call(arguments);
     var element = func.apply(null, props);
-    events.split(' ').forEach(function(name) {
-      watch.listeners.push({ name: name, action: function(msg) {
-        props[0] = props[0] && props[0].constructor === Object ? Object.assign(props[0], msg) : msg;
-        var updated = func.apply(null, props);
-        if (element != null && element.parentNode && (!element.isEqualNode(updated) || msg != null)) {
-          element.parentNode.replaceChild(updated, element);
-          element = updated;
-        }
-      }});
+    watch(events, function(msg) {
+      props[0] = props[0] && props[0].constructor === Object ? Object.assign(props[0], msg) : msg;
+      var updated = func.apply(null, props);
+      if (element != null && element.parentNode && (!element.isEqualNode(updated) || msg != null)) {
+        element.parentNode.replaceChild(updated, element);
+        element = updated;
+      }
     });
     return element;
   }
 }
-export function dispatch(events, props) {
-  events = events.split(' ');
-  watch.listeners.forEach(function(listener) { events.includes(listener.name) && listener.action(props) });
-}
 export function router(routes) {
   window.onhashchange = dispatch.bind(null, 'hashchange');
-  return watch('hashchange', function() {
+  return connect('hashchange', function() {
     var path = location.hash.split('/');
     return path[1] && routes[path[1]] ? routes[path[1]](path[2]) : routes.index(path[2]);
   })();
+}
+export function watch(events, action) {
+  watch.listeners = watch.listeners || [];
+  events.split(' ').forEach(function(name) {
+    watch.listeners.push({ name: name, action: action });
+  });
+}
+export function dispatch(events, props) {
+  events = events.split(' ');
+  watch.listeners.forEach(function(listener) { events.includes(listener.name) && listener.action(props) });
 }

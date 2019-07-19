@@ -1,4 +1,4 @@
-import Nozes, { watch, dispatch } from '../../nozes.js';
+import Nozes, { connect, dispatch } from '../../nozes.js';
 const { ul, li, a } = Nozes;
 
 function Tasks(tasklist = []) {
@@ -17,4 +17,4 @@ function Tasks(tasklist = []) {
   );
 }
 
-export default watch('tasklist', Tasks);
+export default connect('tasklist', Tasks);
