@@ -10,6 +10,16 @@ export default "a abbr address area article aside b base bdi bdo blockquote body
   };
   return result;
 }, {});
+export function watch(events, action) {
+  watch.listeners = watch.listeners || [];
+  events.split(' ').forEach(function(name) {
+    watch.listeners.push({ name: name, action: action });
+  });
+}
+export function dispatch(events, props) {
+  events = events.split(' ');
+  watch.listeners.forEach(function(listener) { events.includes(listener.name) && listener.action(props) });
+}
 export function connect(events, func) {
   return function() {
     var props = [].slice.call(arguments);
@@ -31,14 +41,4 @@ export function router(routes) {
     var path = location.hash.split('/');
     return path[1] && routes[path[1]] ? routes[path[1]](path[2]) : routes.index(path[2]);
   })();
-}
-export function watch(events, action) {
-  watch.listeners = watch.listeners || [];
-  events.split(' ').forEach(function(name) {
-    watch.listeners.push({ name: name, action: action });
-  });
-}
-export function dispatch(events, props) {
-  events = events.split(' ');
-  watch.listeners.forEach(function(listener) { events.includes(listener.name) && listener.action(props) });
 }
