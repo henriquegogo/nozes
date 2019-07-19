@@ -15,7 +15,7 @@ All div(), h1(), a() and other "html tag" functions are just an easier way to re
 document.body.appendChild(
   watch('notify sayHello', function() {
     return div(Date().toString());
-  })();
+  });
 );
 ```
 The "watch" function can be used to attach an "element updater" event. It's just a wrapper for a function that return an Element that update its reference every time "dispatch" is called. You can use multiple watch/dispatch events just with spaces between them.
@@ -36,7 +36,7 @@ function Message(message) {
   );
 }
 
-export default watch('notify', Message);
+export default connect('notify', Message);
 ```
 ```javascript
 // Notifier.js
