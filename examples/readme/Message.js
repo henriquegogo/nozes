@@ -1,5 +1,5 @@
 // Message.js
-import Nozes, { watch } from '../../nozes.js';
+import Nozes, { connect } from '../../nozes.js';
 const { div, b, span } = Nozes;
 
 function Message(message) {
@@ -9,4 +9,4 @@ function Message(message) {
   );
 }
 
-export default watch('notify', Message);
+export default connect('notify', Message);
