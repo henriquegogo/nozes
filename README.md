@@ -91,7 +91,7 @@ More examples in 'examples' folder
 It's a joke, an old brazilian meme called "As árvores somos nozes", that could be translated as "The tree are us". Nozes it's about DOM tree.
 
 ## Special thanks
-[Bruno Facundo](http://github.com/BrunoFacundo) that tested first implementations, suggested improves and did pair programming on "watch / connect / dispatch" implementations.
+[Bruno Facundo](http://github.com/BrunoFacundo) that tested first implementations, suggested improvements and did pair programming on "watch / connect / dispatch" implementations.
 
 ## License
 MIT
