@@ -10,7 +10,7 @@ div(
 ```
 All div(), h1(), a() and other "html tag" functions are just an easier way to return a document.createElement() and set parameters and attributes.
 
-## Watch and dispatch
+## Watch, dispatch and connect
 ```javascript
 watch('log', function(message) {
   console.log(message)
