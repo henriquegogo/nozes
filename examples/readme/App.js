@@ -1,12 +1,21 @@
 // App.js
-import Elements from '../../nozes.js';
+import Elements, { watch, router } from '../../nozes.js';
 import Message from './Message.js';
 import Notifier from './Notifier.js';
-const { div, h1 } = Elements;
+const { div, span, br, a } = Elements;
 
 function App() {
+  watch('log', console.log);
+
   return div(
-    h1('Messenger'),
+    a({ href: '#' }, 'Home'),
+    span(' | '),
+    a({ href: '#/about' }, 'About'),
+    router({
+      index: () => div('Start page'),
+      about: () => div('About page')
+    }),
+    br(),
     Notifier(),
     Message('no message yet')
   );
