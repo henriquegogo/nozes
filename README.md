@@ -29,6 +29,15 @@ document.body.appendChild(
 );
 ```
 
+## Router
+```javascript
+router({
+  index: () => a({ href: '#/hello/world' }, 'Home page'),
+  hello: (param) => a({ href: '#' }, 'Hello, ' + param)
+})
+```
+Router is a function with an object that defines routes and function callbacks that will be invoked when some hash router is called. Routes could receive two params: the first is the route itself and the second is some parameter that will be used as argument of route callback function.
+
 ## Full example
 ```javascript
 // Message.js
