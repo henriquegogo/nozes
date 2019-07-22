@@ -10,7 +10,7 @@ function App() {
     router({
       index: Main,
       category: param => div('Category ' + param),
-      product: param => div('Product ' + param),
+      product: (param, action) => div(action + ' product ' + param),
     }),
     footer()
   );
