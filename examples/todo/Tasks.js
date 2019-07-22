@@ -12,7 +12,7 @@ function Tasks(tasklist = []) {
     dispatch('tasklist', tasklist);
   }
 
-  this.isMounting && watch('add', add);
+  !this && watch('add', add);
 
   return ul(
     ...tasklist.map((text, i) =>

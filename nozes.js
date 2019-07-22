@@ -23,10 +23,10 @@ export function dispatch(events, arg) {
 export function connect(events, func) {
   return function() {
     var props = [].slice.call(arguments);
-    var element = func.apply({ isMounting: true }, props);
+    var element = func.apply(undefined, props);
     watch(events, function(msg) {
       props[0] = props[0] && props[0].constructor === Object ? Object.assign(props[0], msg) : msg;
-      var updated = func.apply({ isUpdating: true }, props);
+      var updated = func.apply(element, props);
       if (element != null && element.parentNode && !element.isEqualNode(updated)) {
         element.parentNode.replaceChild(updated, element);
         element = updated;
@@ -36,9 +36,9 @@ export function connect(events, func) {
   }
 }
 export function router(routes) {
-  window.onhashchange = dispatch.bind(null, 'hashchange');
+  window.onhashchange = dispatch.bind(undefined, 'hashchange');
   return connect('hashchange', function() {
     var path = location.hash.split('/');
-    return path[1] && routes[path[1]] ? routes[path[1]].apply(null, path.slice(2)) : routes.index.apply(null, path.slice(2));
+    return path[1] && routes[path[1]] ? routes[path[1]].apply(undefined, path.slice(2)) : routes.index.apply(undefined, path.slice(2));
   })();
 }
