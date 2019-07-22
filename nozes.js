@@ -23,10 +23,10 @@ export function dispatch(events, arg) {
 export function connect(events, func) {
   return function() {
     var props = [].slice.call(arguments);
-    var element = func.apply(null, props);
+    var element = func.apply({ isMounting: true }, props);
     watch(events, function(msg) {
       props[0] = props[0] && props[0].constructor === Object ? Object.assign(props[0], msg) : msg;
-      var updated = func.apply(null, props);
+      var updated = func.apply({ isUpdating: true }, props);
       if (element != null && element.parentNode && !element.isEqualNode(updated)) {
         element.parentNode.replaceChild(updated, element);
         element = updated;

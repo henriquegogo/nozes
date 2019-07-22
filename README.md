@@ -20,10 +20,12 @@ The "watch" function will subscribe an event that can be invoked using "dispatch
 ```javascript
 dispatch('notify log', 'hello, world');
 ```
-The "connect" function can be used to attach an "element updater" event. It's just a wrapper for a function that return an Element that update its reference every time "dispatch" is called with current event. You can use multiple watch/dispatch events just with spaces between them.
+The "connect" function can be used to attach an "element updater" event. It's just a wrapper for a function that return an Element that update its reference every time "dispatch" is called with current event. You can use multiple watch/dispatch events just with spaces between them. Inside a connected function, you will found booleans that indicates if that function is called for the first time or it's an update call.
 ```javascript
 document.body.appendChild(
   connect('notify', function() {
+    if (this.isMounting) console.log('First time call');
+    else if (this.isUpdating) console.log('Updating');
     return div(Date().toString());
   });
 );
