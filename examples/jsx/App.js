@@ -1,7 +1,7 @@
 // App.js
 import Elements from '../../nozes.js';
 
-function App(...maps) {
+function App() {
   return (
     <div>
       <h1>Hello, world</h1>
