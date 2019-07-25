@@ -1,0 +1,12 @@
+{
+  "name": "builder",
+  "scripts": {
+    "start": "babel App.js -o bundle.js --presets react && rollup bundle.js -o bundle.js -f iife && babel bundle.js -o bundle.js --presets env"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "rollup": "^1.16.6"
+  }
+}
