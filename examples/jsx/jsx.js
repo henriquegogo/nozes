@@ -1,6 +1,6 @@
 import Elements from '../../nozes.js';
 
-function createElement() {
+Elements.createElement = function createElement() {
   var props = [].slice.call(arguments);
   var tag = props.shift();
   if (tag.constructor == Function) {
@@ -8,8 +8,8 @@ function createElement() {
     return tag.apply(undefined, props);
   }
   else {
-    return Elements[tag].apply(undefined, props);
+    return this[tag].apply(undefined, props);
   }
 }
 
-export default createElement;
+export default Elements;
