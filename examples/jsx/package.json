@@ -1,7 +1,7 @@
 {
   "name": "builder",
   "scripts": {
-    "start": "npm run build && serve",
+    "start": "npm run build && serve build",
     "build": "rollup -c"
   },
   "devDependencies": {
