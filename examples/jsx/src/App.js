@@ -1,4 +1,4 @@
-import createElement from '../jsx.js';
+import Elements from '../jsx.js';
 import Message from './Message.js';
 
 function App() {

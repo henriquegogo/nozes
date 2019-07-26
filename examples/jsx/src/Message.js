@@ -1,4 +1,4 @@
-import createElement from '../jsx.js';
+import Elements from '../jsx.js';
 
 function Message(msg) {
   return <p>{msg}</p>;
