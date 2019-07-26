@@ -1,7 +1,15 @@
-import Elements from '../../../nozes.js';
+import Elements from '../../nozes.js';
 
-function createElement(tag, ...props) {
-  return tag.constructor == Function ? tag(...props.filter(i => i !== null)) : Elements[tag](...props);
+function createElement() {
+  var props = [].slice.call(arguments);
+  var tag = props.shift();
+  if (tag.constructor == Function) {
+    props = props.filter(function(i) { return i !== null });
+    return tag.apply(undefined, props);
+  }
+  else {
+    return Elements[tag].apply(undefined, props);
+  }
 }
 
 export default createElement;
