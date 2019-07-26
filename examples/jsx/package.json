@@ -1,13 +1,15 @@
 {
   "name": "builder",
   "scripts": {
-    "start": "babel App.js -o bundle.js && rollup bundle.js -o bundle.js -f iife && babel bundle.js -o bundle.js --presets @babel/env"
+    "start": "npm run build && serve",
+    "build": "babel App.js -o bundle.js && rollup bundle.js -o bundle.js -f iife && babel bundle.js -o bundle.js --presets @babel/env"
   },
   "devDependencies": {
     "@babel/cli": "^7.5.5",
     "@babel/core": "^7.5.5",
     "@babel/preset-env": "^7.5.5",
     "@babel/preset-react": "^7.0.0",
-    "rollup": "^1.16.6"
+    "rollup": "^1.16.6",
+    "serve": "^11.1.0"
   }
 }
