@@ -1,5 +1,6 @@
 {
   "presets": [
-    [ "@babel/react", { "pragma": "Elements.createElement" } ]
+    [ "@babel/react", { "pragma": "createElement" } ],
+    "@babel/env"
   ]
 }

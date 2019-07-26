@@ -1,4 +1,4 @@
-import Elements from '../../../nozes.js';
+import createElement from '../jsx.js';
 
 function Message(msg) {
   return <p>{msg}</p>;
