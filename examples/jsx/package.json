@@ -1,8 +1,8 @@
 {
   "name": "builder",
   "scripts": {
-    "start": "npm run build && serve build",
-    "build": "rollup -c"
+    "start": "serve build | npm run build",
+    "build": "rollup -cw"
   },
   "devDependencies": {
     "@babel/cli": "^7.5.5",

@@ -7,6 +7,10 @@ export default {
     file: 'build/bundle.js',
     format: 'iife'
   },
+  watch: {
+    include: 'src/**',
+    exclude: 'node_modules/**'
+  },
   plugins: [
     resolve(),
     babel({
