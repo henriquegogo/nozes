@@ -11,7 +11,6 @@ function InputForm() {
 
   return input({
     placeholder: 'Type a task',
-    style: 'width: 476px',
     autofocus: true,
     onchange: handleChange
   });
