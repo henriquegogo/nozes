@@ -9,7 +9,8 @@ export default {
   },
   watch: {
     include: 'src/**',
-    exclude: 'node_modules/**'
+    exclude: 'node_modules/**',
+    clearScreen: false
   },
   plugins: [
     resolve(),
