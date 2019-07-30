@@ -44,12 +44,12 @@ Router is a function with an object that defines routes and function callbacks t
 ```javascript
 // Message.js
 import Elements, { connect } from '../../nozes.js';
-const { div, b, span } = Elements;
+const { div, b } = Elements;
 
 function Message(message) {
   return div(
     b('Message: '),
-    span(message)
+    message
   );
 }
 
@@ -75,14 +75,14 @@ export default Notifier;
 import Elements, { watch, router } from '../../nozes.js';
 import Message from './Message.js';
 import Notifier from './Notifier.js';
-const { div, span, br, a } = Elements;
+const { div, br, a } = Elements;
 
 function App() {
   watch('log', console.log);
 
   return div(
     a({ href: '#' }, 'Home'),
-    span(' | '),
+    ' | ',
     a({ href: '#/about' }, 'About'),
     router({
       index: () => div('Start page'),
