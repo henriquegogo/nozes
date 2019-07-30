@@ -1,4 +1,4 @@
-import Elements from '../../nozes.js';
+import Elements from '../nozes.js';
 
 Elements.createElement = function createElement() {
   var props = [].slice.call(arguments);

@@ -1,4 +1,4 @@
-import Elements from '../jsx.js';
+import Elements from '../../../vendor/jsx.js';
 import Message from './Message.js';
 const { h2 } = Elements;
 
