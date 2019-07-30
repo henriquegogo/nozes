@@ -22,6 +22,6 @@ function transpile(element, depth) {
     .concat(Object.keys(attributes).length && children.length ? ',' : '')
     .concat(children.length ? '\n' : '')
     .concat(children.join(', \n'))
-    .concat(children.length ? '\n' : '')
-    .concat(identation + ')');
+    .concat(children.length ? '\n' + identation : '')
+    .concat(')');
 }
