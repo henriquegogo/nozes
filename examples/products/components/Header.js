@@ -1,5 +1,5 @@
 import Elements from '../../../nozes.js';
-const { header, section, div, h1, input, i, label, span, a } = Elements;
+const { header, section, div, h1, input, i, label, a } = Elements;
 
 function Header() {
   return header(

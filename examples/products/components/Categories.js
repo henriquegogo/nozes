@@ -1,12 +1,12 @@
 import Elements from '../../../nozes.js';
-const { div, span, img, a } = Elements;
+const { div, img, a } = Elements;
 
 function Categories() {
   return div({ className: 'categories' },
     ...list.map(item =>
       a({ href: '#/category/' + item.id },
         img({ src: item.img }),
-        span(item.label)
+        item.label
       )
     )
   );

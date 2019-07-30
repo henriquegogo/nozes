@@ -1,5 +1,5 @@
 import Elements from '../../../nozes.js';
-const { div, a, img, h1, h4, span } = Elements;
+const { div, a, img, h1, h4 } = Elements;
 
 function ProductsList() {
   return div(
@@ -9,7 +9,7 @@ function ProductsList() {
         a({ href: '#/product/' + (i+1) + '/view' },
           img({ src: item.img }),
           h4(item.title),
-          span(item.description)
+          item.description
         )
       )
     )

@@ -3,7 +3,7 @@ export default 'a abbr address area article aside b base bdi bdo blockquote body
     var element = document.createElement(tag);
     [].slice.call(arguments).filter(function(arg) { return arg != null }).forEach(function(arg) {
       arg.constructor === Object ? Object.assign(element, arg) :
-      arg.constructor === String || arg.constructor === Number ? element.innerText = arg :
+      arg.constructor === String || arg.constructor === Number ? element.appendChild(document.createTextNode(arg)) :
       arg.constructor.name.includes('Element') && element.appendChild(arg);
     });
     return element;

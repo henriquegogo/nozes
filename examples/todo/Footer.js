@@ -1,5 +1,5 @@
 import Elements, { connect, dispatch } from '../../nozes.js';
-const { div, button, b, span } = Elements;
+const { div, button, b } = Elements;
 
 function Footer(tasklist = []) {
   function reverse() {
@@ -8,7 +8,7 @@ function Footer(tasklist = []) {
 
   return div(
     button({ style: 'float: right', onclick: reverse }, 'Reverse'),
-    b('Total: '), span(tasklist.length)
+    b('Total: '), tasklist.length
   );
 }
 
