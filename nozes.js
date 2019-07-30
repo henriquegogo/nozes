@@ -38,7 +38,7 @@ export function connect(events, func) {
 export function router(routes) {
   window.onhashchange = dispatch.bind(undefined, 'hashchange');
   return connect('hashchange', function() {
-    var path = location.hash.split('/');
+    var path = window.location.hash.split('/');
     return path[1] && routes[path[1]] ? routes[path[1]].apply(undefined, path.slice(2)) : routes.index.apply(undefined, path.slice(2));
   })();
 }
