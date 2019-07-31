@@ -12,7 +12,7 @@ function ProductsList(list = []) {
     h1('Novidades'),
     div({ className: 'products' },
       ...list.map((item, i) =>
-        a({ href: '#/product/' + (i+1) + '/view' },
+        a({ href: '#/product/' + (i+1) },
           img({ src: item.img }),
           h4(item.title),
           item.description
