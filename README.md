@@ -14,9 +14,9 @@ All div(), h1(), a() and other "html tag" functions are just an easier way to re
 ```javascript
 watch('log', function(message) {
   console.log(message)
-});
+}, 'unique_key');
 ```
-The "watch" function will subscribe an event that can be invoked using "dispatch" function. The second argument of a dispatch function will be passed as first argument of watch function callback.
+The "watch" function will subscribe an event that can be invoked using "dispatch" function. The second argument of a dispatch function will be passed as first argument of watch function callback. The "watch" function third argument is optional and set an unique key for this watcher. If other watch is set for this unique key, the old one will be replaced to the new one instead of just append to subscribed list.
 ```javascript
 dispatch('notify log', 'hello, world');
 ```
