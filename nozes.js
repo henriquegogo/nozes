@@ -11,7 +11,9 @@ export default 'a abbr address area article aside b base bdi bdo blockquote body
   return result;
 }, {});
 export function watch(events, func, key) {
-  watch.listeners = watch.listeners && watch.listeners.filter(function(listener) { return listener.key !== key }) || [];
+  watch.listeners = watch.listeners && watch.listeners.filter(function(listener) {
+    return key === undefined || listener.key !== key;
+  }) || [];
   events.split(' ').forEach(function(name) {
     watch.listeners.push({ event: name, action: func, key: key });
   });
@@ -33,7 +35,7 @@ export function connect(events, func) {
         element.parentNode.replaceChild(updated, element);
         element = updated;
       }
-    }, 'connect_' + func.name);
+    }, func.name ? 'connect_' + func.name : undefined);
     return element;
   }
 }
