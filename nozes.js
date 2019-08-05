@@ -18,7 +18,9 @@ export function watch(events, func, key) {
 }
 export function dispatch(events, arg) {
   events = events.split(' ');
-  watch.listeners.forEach(function(listener) { events.includes(listener.event) && listener.action(arg) });
+  watch.listeners.forEach(function(listener) {
+    events.includes(listener.event) && listener.action(arg);
+  });
 }
 export function connect(events, func) {
   return function() {
