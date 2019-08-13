@@ -7,6 +7,7 @@ const { div, h1 } = Elements;
 
 function App() {
   watch('tasklist log', console.log);
+  watch('', () => console.log('Something dispatched'));
 
   return div(
     h1('Todo List'),

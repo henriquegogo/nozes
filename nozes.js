@@ -21,7 +21,7 @@ function watch(events, func, key) {
 function dispatch(events, arg) {
   events = events.split(' ');
   watch.listeners.forEach(function(listener) {
-    events.includes(listener.event) && listener.action(arg);
+    (events.includes(listener.event) || !listener.event) && listener.action(arg, events);
   });
 }
 function connect(events, func) {
