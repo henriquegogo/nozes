@@ -1,5 +1,6 @@
 import Elements, { connect, watch, dispatch } from '../../nozes.js';
-const { ul, li, a } = Elements;
+import Footer from './Footer.js';
+const { div, ul, li, a } = Elements;
 
 function Tasks(tasklist = []) {
   function add(item) {
@@ -14,13 +15,16 @@ function Tasks(tasklist = []) {
 
   !this && watch('add', add);
 
-  return ul(
-    ...tasklist.map((text, i) =>
-      li(
-        text,
-        a({ style: 'float: right', onclick: () => remove(i) }, 'X')
+  return div(
+    ul(
+      ...tasklist.map((text, i) =>
+        li(
+          text,
+          a({ style: 'float: right', onclick: () => remove(i) }, 'X')
+        )
       )
-    )
+    ),
+    Footer()
   );
 }
 

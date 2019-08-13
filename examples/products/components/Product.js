@@ -5,7 +5,7 @@ function Product(product = {}) {
   if (!this && product.id && !product.title) {
     fetch('./api/products')
       .then(res => res.json())
-      .then(res => dispatch('product', res[product.id]));
+      .then(res => dispatch('product', res[product.id - 1]));
   }
 
   return section(
