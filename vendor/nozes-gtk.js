@@ -41,6 +41,8 @@ const { Window, Button } = Elements;
 const { CENTER } = Gtk.Align;
 
 function App() {
+  watch('quit', Gtk.main_quit);
+
   return (
     Window({
         title: 'Application Window',
@@ -54,7 +56,7 @@ function App() {
           valign: CENTER,
           halign: CENTER
         },
-        ref => ref.connect('clicked', () => log('Ouch!'))
+        ref => ref.connect('clicked', () => dispatch('quit'))
       )
     )
   );
