@@ -41,7 +41,7 @@ const { Window, Button } = Elements;
 const { CENTER } = Gtk.Align;
 
 function App() {
-  watch('quit', Gtk.main_quit);
+  watch('quit', () => Gtk.main_quit());
 
   return (
     Window({
