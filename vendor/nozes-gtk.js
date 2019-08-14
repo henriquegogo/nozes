@@ -10,7 +10,7 @@ var Elements = 'Window Button'.split(' ').reduce(function(result, tag) {
     var element = new Gtk[tag];
     [].slice.call(arguments).filter(function(arg) { return arg != null }).forEach(function(arg) {
       arg.constructor === Object ? Object.assign(element, arg) :
-      arg.constructor === Array ? element.connect.apply(element, arg) :
+      arg.constructor === Function ? arg(element) :
       arg.constructor === String || arg.constructor === Number ? element.label = arg :
       arg.constructor.name.includes('Gtk_') && element.add(arg);
     });
@@ -54,7 +54,7 @@ function App() {
           valign: CENTER,
           halign: CENTER
         },
-        ['clicked', () => log('Ouch!')]
+        ref => ref.connect('clicked', () => log('Ouch!'))
       )
     )
   );
