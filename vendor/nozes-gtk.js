@@ -35,10 +35,53 @@ function dispatch(events, arg) {
   });
 }
 
+function connect(events, func) {
+  var events_list = events.split(' ');
+  var store = connect.store = connect.store || {};
+
+  watch('', function(msg, events_dispatched) {
+    events_dispatched.forEach(function(event) {
+      store[event] = store[event] && store[event].constructor === Object ? Object.assign(store[event], msg) : msg;
+    });
+  }, 'connectstore');
+  
+  return function() {
+    var props = [].slice.call(arguments);
+    props[0] = events_list.reduce(function(result, event) {
+      return result && result.constructor === Object ? Object.assign(result, store[event]) : store[event] || props[0];
+    }, props[0]);
+
+    var element = func.apply(undefined, props);
+    watch(events, function(msg) {
+      props[0] = props[0] && props[0].constructor === Object ? Object.assign(props[0], msg) : msg;
+      var updated = func.apply(element, props);
+      var parent = element.get_parent();
+      if (element != null && parent != null) {
+        parent.remove(element);
+        parent.add(updated);
+        element = updated;
+      }
+    }, func.name ? 'connect_' + func.name : undefined);
+    return element;
+  }
+}
+
 /////////////////////////////////////////
 
 const { Window, Button } = Elements;
 const { CENTER } = Gtk.Align;
+
+function ClickArea(text) {
+  return Button({
+      label: text,
+      visible: true,
+      valign: CENTER,
+      halign: CENTER
+    },
+    ref => ref.connect('clicked', () => dispatch('label', 'Clicked'))
+  );
+}
+var ClickArea = connect('label', ClickArea);
 
 function App() {
   watch('quit', () => Gtk.main_quit());
@@ -50,14 +93,7 @@ function App() {
         default_height: 250,
         window_position: CENTER
       },
-      Button({
-          label: 'Click here',
-          visible: true,
-          valign: CENTER,
-          halign: CENTER
-        },
-        ref => ref.connect('clicked', () => dispatch('quit'))
-      )
+      ClickArea('Click here')
     )
   );
 }

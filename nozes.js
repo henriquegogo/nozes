@@ -41,7 +41,7 @@ function connect(events, func) {
   return function() {
     var props = [].slice.call(arguments);
     props[0] = events_list.reduce(function(result, event) {
-      return result && result.constructor === Object ? Object.assign(result, store[event]) : store[event];
+      return result && result.constructor === Object ? Object.assign(result, store[event]) : store[event] || props[0];
     }, props[0]);
 
     var element = func.apply(undefined, props);
