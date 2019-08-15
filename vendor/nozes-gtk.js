@@ -1,9 +1,5 @@
-#!/usr/bin/env gjs
-
 imports.gi.versions.Gtk = '3.0';
 const Gtk = imports.gi.Gtk;
-
-Gtk.init(null);
 
 var Elements = 'Window Button'.split(' ').reduce(function(result, tag) {
   result[tag] = function() {
@@ -65,41 +61,3 @@ function connect(events, func) {
     return element;
   }
 }
-
-/////////////////////////////////////////
-
-const { Window, Button } = Elements;
-const { CENTER } = Gtk.Align;
-
-function ClickArea(text) {
-  return Button({
-      label: text,
-      visible: true,
-      valign: CENTER,
-      halign: CENTER
-    },
-    ref => ref.connect('clicked', () => dispatch('label', 'Clicked'))
-  );
-}
-var ClickArea = connect('label', ClickArea);
-
-function App() {
-  watch('quit', () => Gtk.main_quit());
-
-  return (
-    Window({
-        title: 'Application Window',
-        default_width: 300,
-        default_height: 250,
-        window_position: CENTER
-      },
-      ClickArea('Click here')
-    )
-  );
-}
-
-App().show();
-
-/////////////////////////////////////////
-
-Gtk.main()
