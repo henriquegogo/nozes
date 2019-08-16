@@ -1,6 +1,6 @@
-const ActionItem = imports.ActionItem.ActionItem;
 const { Elements, watch, dispatch, connect } = imports.vendor['nozes-gtk'];
 const { Window, Button } = Elements;
+const ActionItem = imports.ActionItem.ActionItem;
 
 function App() {
   return (
