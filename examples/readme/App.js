@@ -5,7 +5,7 @@ import Notifier from './Notifier.js';
 const { div, br, a } = Elements;
 
 function App() {
-  watch('log', console.log);
+  watch('message', (message) => console.log(message));
 
   return div(
     a({ href: '#' }, 'Home'),

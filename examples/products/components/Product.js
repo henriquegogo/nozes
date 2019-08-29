@@ -1,7 +1,9 @@
-import Elements, { connect, dispatch } from '../../../nozes.js';
+import Elements, { connect, dispatch, store } from '../../../nozes.js';
 const { section, h1, p } = Elements;
 
-function Product(product = {}) {
+function Product(product) {
+  product = store().product || product;
+
   if (!this && product.id && !product.title) {
     fetch('./api/products')
       .then(res => res.json())

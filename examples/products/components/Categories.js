@@ -1,7 +1,9 @@
-import Elements, { connect, dispatch } from '../../../nozes.js';
+import Elements, { connect, dispatch, store } from '../../../nozes.js';
 const { div, img, a } = Elements;
 
-function Categories(list = []) {
+function Categories() {
+  let list = store().categories || [];
+
   if (!this) {
     fetch('./api/categories')
       .then(res => res.json())

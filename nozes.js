@@ -13,40 +13,34 @@ var Elements = 'a abbr address area article aside b base bdi bdo blockquote body
 }, {});
 
 function watch(events, func, key) {
+  var events_list = Array.isArray(events) ? events : events.split(' ');
   watch.listeners = watch.listeners && watch.listeners.filter(function(listener) {
     return key === undefined || listener.key !== key;
   }) || [];
-  events.split(' ').forEach(function(name) {
+  events_list.forEach(function(name) {
     watch.listeners.push({ event: name, action: func, key: key });
   });
 }
 
-function dispatch(events, arg) {
-  var events_list = events.split(' ');
+function dispatch(event, arg) {
   watch.listeners.forEach(function(listener) {
-    (events_list.includes(listener.event) || !listener.event) && listener.action(arg, events_list);
+    (listener.event === event || !listener.event) && listener.action(arg, event);
   });
 }
 
-function connect(events, func) {
-  var events_list = events.split(' ');
-  var store = connect.store = connect.store || {};
+function store() {
+  var msgs = store.msgs = store.msgs || {};
+  watch('', function(msg, event) {
+    msgs[event] = msgs[event] && msgs[event].constructor === Object ? Object.assign(msgs[event], msg) : msg;
+  }, 'store_msgs');
+  return msgs;
+}
 
-  watch('', function(msg, events_dispatched) {
-    events_dispatched.forEach(function(event) {
-      store[event] = store[event] && store[event].constructor === Object ? Object.assign(store[event], msg) : msg;
-    });
-  }, 'connectstore');
-  
+function connect(events, func) {
   return function() {
     var props = [].slice.call(arguments);
-    props[0] = events_list.reduce(function(result, event) {
-      return result && result.constructor === Object ? Object.assign(result, store[event]) : store[event] || props[0];
-    }, props[0]);
-
     var element = func.apply(undefined, props);
-    watch(events, function(msg) {
-      props[0] = props[0] && props[0].constructor === Object ? Object.assign(props[0], msg) : msg;
+    watch(events, function() {
       var updated = func.apply(element, props);
       if (element != null && element.parentNode && !element.isEqualNode(updated)) {
         element.parentNode.replaceChild(updated, element);
@@ -66,4 +60,4 @@ function router(routes) {
 }
 
 export default Elements;
-export { watch, dispatch, connect, router };
+export { watch, dispatch, store, connect, router };
