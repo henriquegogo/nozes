@@ -12,24 +12,31 @@ All div(), h1(), a() and other "html tag" functions are just an easier way to re
 
 ## Watch, dispatch and connect
 ```javascript
-watch('log', function(message) {
+watch('notify log', function(message) {
   console.log(message)
 }, 'unique_key');
 ```
-The "watch" function will subscribe an event that can be invoked using "dispatch" function. The second argument of a dispatch function will be passed as first argument of watch function callback. The "watch" function third argument is optional and set an unique key for this watcher. If other watch is set for this unique key, the old one will be replaced to the new one instead of just append to subscribed list.
+The "watch" function will subscribe an event that can be invoked using "dispatch" function. You can watch multiple events using a single string with white spaces or an array. The second argument of a dispatch function will be passed as first argument of watch function callback. The "watch" function third argument is optional and set an unique key for this watcher. If other watch is set for this unique key, the old one will be replaced to the new one instead of just append to subscribed list.
 ```javascript
-dispatch('notify log', 'hello, world');
+dispatch('notify', 'hello, world');
 ```
-The "connect" function can be used to attach an "element updater" event. It's just a wrapper for a function that return an Element that update its reference every time "dispatch" is called with current event. You can use multiple watch/dispatch events just with spaces between them. Each connected function will set 'this' as the rendered element that should be updated on return. If it's the first call, 'this' is undefined.
+The "connect" function can be used to attach an "element updater" event. It's just a wrapper for a function that return an Element that update its reference every time "dispatch" is called with current event. You can use multiple watch/dispatch events just with spaces between them os setting as array. Each connected function will set 'this' as the rendered element that should be updated on return. If it's the first call, 'this' is undefined.
 ```javascript
 document.body.appendChild(
-  connect('notify', function() {
+  connect(['notify', 'log'], function() {
     if (this) console.log('Element to be replaced:', this);
     else console.log('First time call. No old element reference');
     return div(Date().toString());
   });
 );
 ```
+
+## Store
+Everytime an event is dispatched, the second argument is stored in store() function with the event key. You can access the store anytime using this syntax:
+```javascript
+var last_notification = store().notify;
+```
+If the message dispatched is an object, so instead of replace the value, the object dispatched will be merged into the stored object;
 
 ## Router
 ```javascript
@@ -43,17 +50,19 @@ Router is a function with an object that defines routes and function callbacks t
 ## Full example
 ```javascript
 // Message.js
-import Elements, { connect } from '../../nozes.js';
+import Elements, { connect, store } from '../../nozes.js';
 const { div, b } = Elements;
 
 function Message(message) {
+  message = store().message || message;
+
   return div(
     b('Message: '),
     message
   );
 }
 
-export default connect('notify', Message);
+export default connect('message', Message);
 ```
 ```javascript
 // Notifier.js
@@ -62,7 +71,7 @@ const { button } = Elements;
 
 function Notifier() {
   const handleClick = () => {
-    dispatch('notify log', 'you are notified');
+    dispatch('message', 'you are notified');
   }
 
   return button({ onclick: handleClick }, 'Notify message');
@@ -78,7 +87,7 @@ import Notifier from './Notifier.js';
 const { div, br, a } = Elements;
 
 function App() {
-  watch('log', console.log);
+  watch('message', (message) => console.log(message));
 
   return div(
     a({ href: '#' }, 'Home'),
