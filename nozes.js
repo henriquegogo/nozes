@@ -13,12 +13,15 @@ var Elements = 'a abbr address area article aside b base bdi bdo blockquote body
 }, {});
 
 function watch(events, func, key) {
+  var listeners = watch.listeners = watch.listeners || [];
   var events_list = Array.isArray(events) ? events : events.split(' ');
-  watch.listeners = watch.listeners && watch.listeners.filter(function(listener) {
-    return key === undefined || listener.key !== key;
-  }) || [];
   events_list.forEach(function(name) {
-    watch.listeners.push({ event: name, action: func, key: key });
+    var found_event = listeners.find(function(listener) { return key !== undefined && listener.key === key });
+    if (found_event) {
+      Object.assign(found_event, { event: name, action: func });
+    } else {
+      listeners.push({ event: name, action: func, key: key });
+    }
   });
 }
 
