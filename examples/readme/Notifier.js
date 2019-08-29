@@ -4,7 +4,7 @@ const { button } = Elements;
 
 function Notifier() {
   const handleClick = () => {
-    dispatch('notify log', 'you are notified');
+    dispatch('message', 'you are notified');
   }
 
   return button({ onclick: handleClick }, 'Notify message');
