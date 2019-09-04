@@ -2,9 +2,9 @@ import Elements, { connect, dispatch, store } from '../../../nozes.js';
 const { div, a, img, h1, h4 } = Elements;
 
 function ProductsList() {
-  let list = store().products || [];
+  let list = store.products || [];
 
-  if (!this) {
+  if (!this.isConnected) {
     fetch('./api/products')
       .then(res => res.json())
       .then(res => dispatch('products', res));

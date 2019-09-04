@@ -3,7 +3,7 @@ import Footer from './Footer.js';
 const { div, ul, li, a } = Elements;
 
 function Tasks() {
-  let tasklist = store().tasklist || [];
+  let tasklist = [ ...store.tasklist || [] ];
 
   function add(item) {
     Array.isArray(item) ? tasklist = tasklist.concat(item) : tasklist.push(item);
@@ -15,7 +15,7 @@ function Tasks() {
     dispatch('tasklist', tasklist);
   }
 
-  !this && watch('add', add);
+  !this.isConnected && watch('add', add);
 
   return div(
     ul(

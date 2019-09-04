@@ -12,8 +12,10 @@ var Elements = 'a abbr address area article aside b base bdi bdo blockquote body
   return result;
 }, {});
 
+var store = {};
+var listeners = [];
+
 function watch(events, func, key) {
-  var listeners = watch.listeners = watch.listeners || [];
   var events_list = Array.isArray(events) ? events : events.split(' ');
   events_list.forEach(function(name) {
     var found_event = listeners.find(function(listener) { return key !== undefined && listener.key === key });
@@ -25,24 +27,19 @@ function watch(events, func, key) {
   });
 }
 
-function dispatch(event, arg) {
-  watch.listeners.forEach(function(listener) {
-    (listener.event === event || !listener.event) && listener.action(arg, event);
+function dispatch(event, msg) {
+  store[event] = store[event] && store[event].constructor === Object ? Object.assign(store[event], msg) : msg;
+  listeners.forEach(function(listener) {
+    if (listener.event === event || !listener.event) {
+      listener.action(msg);
+    }
   });
-}
-
-function store() {
-  var msgs = store.msgs = store.msgs || {};
-  watch('', function(msg, event) {
-    msgs[event] = msgs[event] && msgs[event].constructor === Object ? Object.assign(msgs[event], msg) : msg;
-  }, 'store_msgs');
-  return msgs;
 }
 
 function connect(events, func) {
   return function() {
     var props = [].slice.call(arguments);
-    var element = func.apply(undefined, props);
+    var element = func.apply(document.createDocumentFragment(), props);
     watch(events, function() {
       var updated = func.apply(element, props);
       if (element != null && element.parentNode && !element.isEqualNode(updated)) {
@@ -63,4 +60,4 @@ function router(routes) {
 }
 
 export default Elements;
-export { watch, dispatch, store, connect, router };
+export { store, watch, dispatch, connect, router };
