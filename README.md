@@ -20,7 +20,7 @@ The "watch" function will subscribe an event that can be invoked using "dispatch
 ```javascript
 dispatch('notify', 'hello, world');
 ```
-The "connect" function can be used to attach an "element updater" event. It's just a wrapper for a function that return an Element that update its reference every time "dispatch" is called with current event. You can use multiple watch/dispatch events just with spaces between them os setting as array. Each connected function will set 'this' as the rendered element that should be updated on return. If it's the first call, 'this' is undefined.
+The "connect" function can be used to attach an "element updater" event. It's just a wrapper for a function that return an Element that update its reference every time "dispatch" is called with current event. You can use multiple watch/dispatch events just with spaces between them os setting as array. Each connected function will set 'this' as the rendered element that should be updated on return. If it's the first call, 'this' is a document-fragment. You can verify if 'this' is rendered in DOM using WebAPI this.isConnected boolean.
 ```javascript
 document.body.appendChild(
   connect(['notify', 'log'], function() {
@@ -32,9 +32,9 @@ document.body.appendChild(
 ```
 
 ## Store
-Everytime an event is dispatched, the second argument is stored in store() function with the event key. You can access the store anytime using this syntax:
+Everytime an event is dispatched, the second argument is stored in store function with the event key. You can access the store anytime using this syntax:
 ```javascript
-var last_notification = store().notify;
+var last_notification = store.notify;
 ```
 If the message dispatched is an object, so instead of replace the value, the object dispatched will be merged into the stored object;
 
@@ -54,7 +54,7 @@ import Elements, { connect, store } from '../../nozes.js';
 const { div, b } = Elements;
 
 function Message(message) {
-  message = store().message || message;
+  message = store.message || message;
 
   return div(
     b('Message: '),
