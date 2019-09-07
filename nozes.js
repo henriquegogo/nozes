@@ -12,21 +12,18 @@ var Elements = 'a abbr address area article aside b base bdi bdo blockquote body
   return result;
 }, {});
 
-var store = {};
-var listeners = [];
+var store = {}, listeners = [];
 
 function watch(event, func, group) {
-  var found_event = listeners.find(function(listener) { return group !== undefined && listener.group === group && listener.event === event });
-  if (found_event) {
-    Object.assign(found_event, { action: func });
-  } else {
-    listeners.push({ event: event, action: func, group: group });
-  }
+  var found_event = listeners.find(function(listener) {
+    return group !== undefined && listener.group === group && listener.event === event;
+  });
+  found_event ? Object.assign(found_event, { action: func }) : listeners.push({ event: event, action: func, group: group });
 }
 
 function dispatch(event, msg) {
   listeners.forEach(function(listener) {
-    if (listener.event === event || !listener.event) {
+    if (listener.event === (event = event.name || event) || !listener.event) {
       (event !== listener.group) && (msg = store[event] = msg.constructor === Object ? Object.assign({}, store[event], msg) : msg);
       listener.action(msg);
     }
@@ -34,13 +31,12 @@ function dispatch(event, msg) {
 }
 
 function connect(events, func) {
-  !Array.isArray(events) && (events = [events]);
+  events.constructor === Function ? (func = events, events = []) : !Array.isArray(events) && (events = [events]);
   return function(props) {
-    var element = func.call({ isConnected: false }, props = props || {});
-    events.forEach(function(event) {
-      watch(event, function(new_props) {
-        new_props = event === func.name ? new_props : (props[event] = new_props, props)
-        var updated = func.call({ isConnected: true }, Object.assign({}, props, new_props));
+    var element = func.call({ isConnected: false }, props = Object.assign({}, props, store));
+    events.concat(func.name).forEach(function(event) {
+      watch(event = event.name || event, function(new_props) {
+        var updated = func.call({ isConnected: true }, props = Object.assign({}, props, store, event === func.name && new_props));
         if (element != null && element.parentNode && !element.isEqualNode(updated)) {
           element.parentNode.replaceChild(updated, element);
           element = updated;
