@@ -16,22 +16,19 @@ var store = {};
 var listeners = [];
 
 function watch(events, func, key) {
-  events.constructor === Function ? (func = events, events = [func.name]) :
-  events.constructor === String ? events = events.split(' ') : events;
-  events.forEach(function(name) {
-    var found_event = listeners.find(function(listener) { return key !== undefined && listener.key === key || listener.key === key.concat('_' + name) });
+  var events_list = Array.isArray(events) ? events : events.split(' ');
+  events_list.forEach(function(name) {
+    var found_event = listeners.find(function(listener) { return key !== undefined && listener.key === key.concat('_' + name) });
     if (found_event) {
       Object.assign(found_event, { event: name, action: func });
     } else {
-      listeners.push({ event: name, action: func, key: key === name ? key : key && key.concat('_' + name) });
+      listeners.push({ event: name, action: func, key: key && key.concat('_' + name) });
     }
   });
-  console.log(listeners);
 }
 
 function dispatch(event, msg) {
-  event.constructor === Function ? event = event.name :
-    store[event] = store[event] && store[event].constructor === Object ? Object.assign(store[event], msg) : msg;
+  store[event] = store[event] && store[event].constructor === Object ? Object.assign(store[event], msg) : msg;
   listeners.forEach(function(listener) {
     if (listener.event === event || !listener.event) {
       listener.action(msg);
@@ -40,24 +37,23 @@ function dispatch(event, msg) {
 }
 
 function connect(events, func) {
-  events.constructor === Function ? (func = events, events = []) : events.constructor === String && (events = events.split(' '));
-  events.push(func.name);
   return function() {
-    var element = func.apply({ name: func.name, isConnected: false }, [].slice.call(arguments));
+    var props = [].slice.call(arguments);
+    var element = func.apply({ isConnected: false }, props);
     watch(events, function() {
-      var updated = func.apply({ name: func.name, isConnected: true }, [].slice.call(arguments));
+      var updated = func.apply({ isConnected: true }, props);
       if (element != null && element.parentNode && !element.isEqualNode(updated)) {
         element.parentNode.replaceChild(updated, element);
         element = updated;
       }
-    }, func.name);
+    }, func.name ? 'connect_' + func.name : undefined);
     return Elements['n-connect']({ title: func.name }, element);
   }
 }
 
 function router(routes) {
   window.onhashchange = dispatch.bind(undefined, 'hashchange');
-  return connect(function hashchange() {
+  return connect('hashchange', function hashchange() {
     var path = window.location.hash.split('/');
     return path[1] && routes[path[1]] ? routes[path[1]].apply(undefined, path.slice(2)) : routes.index.apply(undefined, path.slice(2));
   })();
