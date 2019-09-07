@@ -15,38 +15,38 @@ var Elements = 'a abbr address area article aside b base bdi bdo blockquote body
 var store = {};
 var listeners = [];
 
-function watch(events, func, key) {
-  var events_list = Array.isArray(events) ? events : events.split(' ');
-  events_list.forEach(function(name) {
-    var found_event = listeners.find(function(listener) { return key !== undefined && listener.key === key.concat('_' + name) });
-    if (found_event) {
-      Object.assign(found_event, { event: name, action: func });
-    } else {
-      listeners.push({ event: name, action: func, key: key && key.concat('_' + name) });
-    }
-  });
+function watch(event, func, group) {
+  var found_event = listeners.find(function(listener) { return group !== undefined && listener.group === group && listener.event === event });
+  if (found_event) {
+    Object.assign(found_event, { action: func });
+  } else {
+    listeners.push({ event: event, action: func, group: group });
+  }
 }
 
 function dispatch(event, msg) {
-  store[event] = store[event] && store[event].constructor === Object ? Object.assign(store[event], msg) : msg;
   listeners.forEach(function(listener) {
     if (listener.event === event || !listener.event) {
+      (event !== listener.group) && (msg = store[event] = msg.constructor === Object ? Object.assign({}, store[event], msg) : msg);
       listener.action(msg);
     }
   });
 }
 
 function connect(events, func) {
-  return function() {
-    var props = [].slice.call(arguments);
-    var element = func.apply({ isConnected: false }, props);
-    watch(events, function() {
-      var updated = func.apply({ isConnected: true }, props);
-      if (element != null && element.parentNode && !element.isEqualNode(updated)) {
-        element.parentNode.replaceChild(updated, element);
-        element = updated;
-      }
-    }, func.name ? 'connect_' + func.name : undefined);
+  !Array.isArray(events) && (events = [events]);
+  return function(props) {
+    var element = func.call({ isConnected: false }, props = props || {});
+    events.forEach(function(event) {
+      watch(event, function(new_props) {
+        new_props = event === func.name ? new_props : (props[event] = new_props, props)
+        var updated = func.call({ isConnected: true }, Object.assign({}, props, new_props));
+        if (element != null && element.parentNode && !element.isEqualNode(updated)) {
+          element.parentNode.replaceChild(updated, element);
+          element = updated;
+        }
+      }, func.name);
+    });
     return Elements['n-connect']({ title: func.name }, element);
   }
 }
