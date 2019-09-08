@@ -33,7 +33,7 @@ function dispatch(event, msg) {
 function connect(events, func) {
   events.constructor === Function ? (func = events, events = []) : !Array.isArray(events) && (events = [events]);
   return function(props) {
-    var element = func.call({ isConnected: false }, props = Object.assign({}, props, store));
+    var element = document.createDocumentFragment();
     events.concat(func.name).forEach(function(event) {
       watch(event = event.name || event, function(new_props) {
         var updated = func.call({ isConnected: true }, props = Object.assign({}, props, store, event === func.name && new_props));
@@ -43,6 +43,7 @@ function connect(events, func) {
         }
       }, func.name);
     });
+    element = func.call({ isConnected: false }, props = Object.assign({}, props, store));
     return Elements['n-connect']({ title: func.name }, element);
   }
 }
