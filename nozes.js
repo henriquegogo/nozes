@@ -24,7 +24,7 @@ function watch(event, func, group) {
 function dispatch(event, msg) {
   event.constructor === String && (msg = store[event] = msg.constructor === Object ? Object.assign({}, store[event], msg) : msg);
   listeners.forEach(function(listener) {
-    if (listener.event === (event = event.name || event) || !listener.event) {
+    if (listener.event === (event.name || event) || !listener.event) {
       listener.action(msg);
     }
   });
