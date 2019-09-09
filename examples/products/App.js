@@ -12,7 +12,7 @@ function App() {
       router({
         index: Main,
         category: param => div('Category ' + param),
-        product: param => div(Product({ id: param }))
+        product: param => Product({ id: param })
       })
     ),
     footer()

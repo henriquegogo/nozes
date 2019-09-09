@@ -1,9 +1,8 @@
-import Elements, { connect, watch, dispatch, store } from '../../nozes.js';
+import Elements, { connect, watch, dispatch } from '../../nozes.js';
 import Footer from './Footer.js';
 const { div, ul, li, a } = Elements;
 
-function Tasks() {
-  let tasklist = [ ...store.tasklist || [] ];
+function Tasks({ tasklist = [] }) {
 
   function add(item) {
     Array.isArray(item) ? tasklist = tasklist.concat(item) : tasklist.push(item);

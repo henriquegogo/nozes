@@ -5,7 +5,7 @@ import Tasks from './Tasks.js';
 const { div, h1 } = Elements;
 
 function App() {
-  watch('tasklist log', console.log);
+  watch('tasklist', console.log);
   watch('', () => console.log('Something dispatched'));
 
   return div(

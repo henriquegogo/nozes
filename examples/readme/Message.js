@@ -1,9 +1,8 @@
 // Message.js
-import Elements, { connect, store } from '../../nozes.js';
+import Elements, { connect } from '../../nozes.js';
 const { div, b } = Elements;
 
-function Message(message) {
-  message = store.message || message;
+function Message({ message }) {
 
   return div(
     b('Message: '),

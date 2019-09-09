@@ -1,13 +1,12 @@
-import Elements, { connect, dispatch, store } from '../../../nozes.js';
+import Elements, { connect, dispatch } from '../../../nozes.js';
 const { section, h1, p } = Elements;
 
-function Product(product) {
-  product = store.product || product;
+function Product(product = {}) {
 
   if (!this.isConnected && product.id && !product.title) {
     fetch('./api/products')
       .then(res => res.json())
-      .then(res => dispatch('product', res[product.id - 1]));
+      .then(res => dispatch(Product, res[product.id - 1]));
   }
 
   return section(
@@ -16,4 +15,4 @@ function Product(product) {
   );
 }
 
-export default connect('product', Product);
+export default connect(Product);

@@ -17,7 +17,7 @@ function App() {
     }),
     br(),
     Notifier(),
-    Message('no message yet')
+    Message({ message: 'no message yet' })
   );
 }
 

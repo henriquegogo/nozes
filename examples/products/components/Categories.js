@@ -1,17 +1,16 @@
-import Elements, { connect, dispatch, store } from '../../../nozes.js';
+import Elements, { connect, dispatch } from '../../../nozes.js';
 const { div, img, a } = Elements;
 
-function Categories() {
-  let list = store.categories || [];
+function Categories({ categories = [] }) {
 
   if (!this.isConnected) {
     fetch('./api/categories')
       .then(res => res.json())
-      .then(res => dispatch('categories', res));
+      .then(categories => dispatch('categories', categories));
   }
 
   return div({ className: 'categories' },
-    ...list.map(item =>
+    ...categories.map(item =>
       a({ href: '#/category/' + item.id },
         img({ src: item.img }),
         item.label

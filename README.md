@@ -50,11 +50,10 @@ Router is a function with an object that defines routes and function callbacks t
 ## Full example
 ```javascript
 // Message.js
-import Elements, { connect, store } from '../../nozes.js';
+import Elements, { connect } from '../../nozes.js';
 const { div, b } = Elements;
 
-function Message(message) {
-  message = store.message || message;
+function Message({ message }) {
 
   return div(
     b('Message: '),
@@ -99,7 +98,7 @@ function App() {
     }),
     br(),
     Notifier(),
-    Message('no message yet')
+    Message({ message: 'no message yet' })
   );
 }
 
