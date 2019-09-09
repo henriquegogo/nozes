@@ -14,17 +14,17 @@ var Elements = 'a abbr address area article aside b base bdi bdo blockquote body
 
 var store = {}, listeners = [];
 
-function watch(event, func, group, save) {
+function watch(event, func, group) {
   var found_event = listeners.find(function(listener) {
     return group !== undefined && listener.group === group && listener.event === event;
   });
-  found_event ? Object.assign(found_event, { action: func }) : listeners.push({ event: event, action: func, group: group, save: save !== false });
+  found_event ? Object.assign(found_event, { action: func }) : listeners.push({ event: event, action: func, group: group });
 }
 
 function dispatch(event, msg) {
+  event.constructor === String && (msg = store[event] = msg.constructor === Object ? Object.assign({}, store[event], msg) : msg);
   listeners.forEach(function(listener) {
     if (listener.event === (event = event.name || event) || !listener.event) {
-      listener.save && (msg = store[event] = msg.constructor === Object ? Object.assign({}, store[event], msg) : msg);
       listener.action(msg);
     }
   });
@@ -41,7 +41,7 @@ function connect(events, func) {
           element.parentNode.replaceChild(updated, element);
           element = updated;
         }
-      }, func.name, event !== func.name);
+      }, func.name);
     });
     element = func.call({ isConnected: false }, props = Object.assign({}, props, store));
     return Elements['n-connect']({ title: func.name }, element);
@@ -49,12 +49,12 @@ function connect(events, func) {
 }
 
 function router(routes) {
-  window.onhashchange = dispatch.bind(undefined, 'hashchange');
-  return connect('hashchange', function hashchange() {
+  window.onhashchange = dispatch.bind(undefined, { name: 'hashchange' });
+  return connect(function hashchange() {
     var path = window.location.hash.split('/');
     return path[1] && routes[path[1]] ? routes[path[1]].apply(undefined, path.slice(2)) : routes.index.apply(undefined, path.slice(2));
   })();
 }
 
 export default Elements;
-export { store, watch, dispatch, connect, router };
+export { watch, dispatch, connect, router };
