@@ -14,17 +14,17 @@ var Elements = 'a abbr address area article aside b base bdi bdo blockquote body
 
 var store = {}, listeners = [];
 
-function watch(event, func, group) {
+function watch(event, func, group, save) {
   var found_event = listeners.find(function(listener) {
     return group !== undefined && listener.group === group && listener.event === event;
   });
-  found_event ? Object.assign(found_event, { action: func }) : listeners.push({ event: event, action: func, group: group });
+  found_event ? Object.assign(found_event, { action: func }) : listeners.push({ event: event, action: func, group: group, save: save !== false });
 }
 
 function dispatch(event, msg) {
   listeners.forEach(function(listener) {
     if (listener.event === (event = event.name || event) || !listener.event) {
-      (event !== listener.group) && (msg = store[event] = msg.constructor === Object ? Object.assign({}, store[event], msg) : msg);
+      listener.save && (msg = store[event] = msg.constructor === Object ? Object.assign({}, store[event], msg) : msg);
       listener.action(msg);
     }
   });
@@ -41,7 +41,7 @@ function connect(events, func) {
           element.parentNode.replaceChild(updated, element);
           element = updated;
         }
-      }, func.name);
+      }, func.name, event !== func.name);
     });
     element = func.call({ isConnected: false }, props = Object.assign({}, props, store));
     return Elements['n-connect']({ title: func.name }, element);
