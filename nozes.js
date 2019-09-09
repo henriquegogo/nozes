@@ -37,7 +37,7 @@ function connect(events, func) {
     events.concat(func.name).forEach(function(event) {
       watch(event = event.name || event, function(new_props) {
         var updated = func.call({ isConnected: true }, props = Object.assign({}, props, store, event === func.name && new_props));
-        if (element != null && element.parentNode && !element.isEqualNode(updated)) {
+        if (element != null && element.parentNode && updated instanceof Node && !element.isEqualNode(updated)) {
           element.parentNode.replaceChild(updated, element);
           element = updated;
         }
