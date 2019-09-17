@@ -1,6 +1,3 @@
-import Elements, { connect, dispatch } from '../../../nozes.js';
-const { section, h1, p } = Elements;
-
 function Product(product = {}) {
 
   if (!this.isConnected && product.id && !product.title) {

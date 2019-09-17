@@ -1,6 +1,3 @@
-import Elements, { dispatch } from '../../nozes.js';
-const { input } = Elements;
-
 setTimeout(() => dispatch('add', ['Async first item', 'Async second item']), 100);
 
 function InputForm() {

@@ -1,6 +1,3 @@
-import Elements, { connect, dispatch } from '../../../nozes.js';
-const { div, img, a } = Elements;
-
 function Categories({ categories = [] }) {
 
   if (!this.isConnected) {
