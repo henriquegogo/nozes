@@ -1,6 +1,8 @@
 // App.js
+import Elements, { watch, router } from '../../nozes.js';
 import Message from './Message.js';
 import Notifier from './Notifier.js';
+const { div, br, a } = Elements;
 
 function App() {
   watch('message', (message) => console.log(message));

@@ -1,3 +1,6 @@
+import Elements, { connect, dispatch } from '../../../nozes.js';
+const { div, a, img, h1, h4 } = Elements;
+
 function ProductsList({ products = [] }) {
 
   if (!this.isConnected) {
