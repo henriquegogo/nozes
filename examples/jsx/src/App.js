@@ -1,6 +1,5 @@
-import Elements from '../../../vendor/jsx.js';
 import Message from './Message.js';
-const { h2 } = Elements;
+const { h2 } = Nozes;
 
 function App() {
   return (
