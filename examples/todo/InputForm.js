@@ -1,5 +1,4 @@
-import Elements, { dispatch } from '../../nozes.js';
-const { input } = Elements;
+const { dispatch, input } = Nozes;
 
 setTimeout(() => dispatch('add', ['Async first item', 'Async second item']), 100);
 

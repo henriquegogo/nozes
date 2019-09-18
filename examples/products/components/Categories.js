@@ -1,5 +1,4 @@
-import Elements, { connect, dispatch } from '../../../nozes.js';
-const { div, img, a } = Elements;
+const { connect, dispatch, div, img, a } = Nozes;
 
 function Categories({ categories = [] }) {
 

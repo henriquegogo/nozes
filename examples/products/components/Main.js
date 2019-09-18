@@ -1,5 +1,4 @@
-import Elements from '../../../nozes.js';
-const { section } = Elements;
+const { section } = Nozes;
 
 import Categories from './Categories.js';
 import ProductsList from './ProductsList.js';

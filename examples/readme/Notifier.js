@@ -1,6 +1,5 @@
 // Notifier.js
-import Elements, { dispatch } from '../../nozes.js';
-const { button } = Elements;
+const { dispatch, button } = Nozes;
 
 function Notifier() {
   const handleClick = () => {

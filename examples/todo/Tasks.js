@@ -1,6 +1,5 @@
-import Elements, { connect, watch, dispatch } from '../../nozes.js';
 import Footer from './Footer.js';
-const { div, ul, li, a } = Elements;
+const { connect, watch, dispatch, div, ul, li, a } = Nozes;
 
 function Tasks({ tasklist = [] }) {
 

@@ -1,5 +1,4 @@
-import Elements, { connect, dispatch } from '../../../nozes.js';
-const { section, h1, p } = Elements;
+const { connect, dispatch, section, h1, p } = Nozes;
 
 function Product(product = {}) {
 

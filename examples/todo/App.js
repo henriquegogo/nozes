@@ -1,8 +1,6 @@
-import Elements, { watch, dispatch } from '../../nozes.js';
 import InputForm from './InputForm.js';
 import Tasks from './Tasks.js';
-
-const { div, h1 } = Elements;
+const { watch, dispatch, div, h1 } = Nozes;
 
 function App() {
   watch('tasklist', console.log);
