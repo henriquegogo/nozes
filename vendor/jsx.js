@@ -1,6 +1,6 @@
-import Elements from '../nozes.js';
+import '../nozes.js';
 
-Elements.createElement = function createElement() {
+Nozes.createElement = function createElement() {
   var props = [].slice.call(arguments);
   var tag = props.shift();
   if (tag.constructor == Function) {
@@ -12,4 +12,4 @@ Elements.createElement = function createElement() {
   }
 }
 
-export default Elements;
+export default Nozes;
