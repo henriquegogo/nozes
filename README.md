@@ -14,7 +14,7 @@ Declarative way to create plain javascript components
       dispatch('print', 'HI!');
     };
 
-    return div{
+    return div(
       p({ className: 'message' }, msg),
       button({ onclick: handleClick }, 'Click here')
     );
@@ -27,7 +27,7 @@ Declarative way to create plain javascript components
     );
   }
 
-  watch('print', alert);
+  watch('print', alert.bind(this));
 
   document.body.appendChild(App());
 })();
@@ -62,11 +62,11 @@ Every time the watch function is invoked, a listener is created  unless the even
 An event can be a blank string. In this case, this listener will be called everytime any event is dispatched.
 
 ```javascript
-watch('log', alert, 'view');          // A listener was created with a group
-watch('print', console.log);          // Another listener was created
-watch('log', document.write, 'view'); // That first listener function was replaced
-watch('print', console.log);          // Another listener was created (now this event will console.log two times)
-watch('', alert);                     // Will call alert if any event is dispatched
+watch('log', alert.bind(this), 'view');  // A listener was created with a group
+watch('print', console.log);             // Another listener was created
+watch('log', prompt.bind(this), 'view'); // That first listener function was replaced
+watch('print', console.log);             // Another listener was created (now this event will console.log two times)
+watch('', alert.bind(this));             // Will call alert if any event is dispatched
 ```
 
 ## Dispatch
