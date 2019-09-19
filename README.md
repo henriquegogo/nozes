@@ -1,6 +1,39 @@
 # Nozes
 Declarative way to create plain javascript components
 
+## Get started
+
+```html
+<script src="./nozes.js"></script>
+<script>
+(function() {
+  Object.assign(this, Nozes);
+
+  function Message(msg) {
+    var handleClick = function() {
+      dispatch('print', 'HI!');
+    };
+
+    return div{
+      p({ className: 'message' }, msg),
+      button({ onclick: handleClick }, 'Click here')
+    );
+  }
+
+  function App() {
+    return div(
+      h1('Hello, world'),
+      Message('Lorem ipsum')
+    );
+  }
+
+  watch('print', alert);
+
+  document.body.appendChild(App());
+})();
+</script>
+```
+
 ## Elements
 
 Has a constructor for each HTML tag that receive parameters that could be objects, functions, strings, numbers or HTML element instances.
