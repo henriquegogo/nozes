@@ -1,26 +1,61 @@
 # Nozes
 Declarative way to create plain javascript components
 
-## How to use
+## Elements
+
+Has a constructor for each HTML tag that receive parameters that could be objects, functions, strings, numbers or HTML element instances.
+
+The return of any of these constructors are HTML elements created with document.createElement function.
+
+- If a parameter is an object, their attributes will be assigned to that element.
+- If it's another HTML element, this will be appended as child of that.
+- If it's a string or a number, a TextNode will be created with the value and appended as child of the element.
+- If a function, it'll be called with the element as first parameter.
+
 ```javascript
 div(
-  h1('Hello, world'),
-  a({ href: '#', onclick: function() { alert('clicked') } }, 'Click here')
+  h1('hello, world'),
+  a({ href: '#' }, 'click here'),
+  function(me) { console.log("ref:", me) }
 )
 ```
-All div(), h1(), a() and other "html tag" functions are just an easier way to return a document.createElement() and set parameters and attributes.
 
-## Watch, dispatch and connect
+## Watch
+
+Create an event listener that call a function if dispatched. An event can belong to a group.
+
+Every time the watch function is invoked, a listener is created  unless the event belong to a specific group that already exists. In this case, just the callback function will be replaced.
+
+An event can be a blank string. In this case, this listener will be called everytime any event is dispatched.
+
 ```javascript
-watch('notify log', function(message) {
-  console.log(message)
-}, 'unique_key');
+watch('log', alert, 'view');          // A listener was created with a group
+watch('print', console.log);          // Another listener was created
+watch('log', document.write, 'view'); // That first listener function was replaced
+watch('print', console.log);          // Another listener was created (now this event will console.log two times)
+watch('', alert);                     // Will call alert if any event is dispatched
 ```
-The "watch" function will subscribe an event that can be invoked using "dispatch" function. You can watch multiple events using a single string with white spaces or an array. The second argument of a dispatch function will be passed as first argument of watch function callback. The "watch" function third argument is optional and set an unique key for this watcher. If other watch is set for this unique key, the old one will be replaced to the new one instead of just append to subscribed list.
+
+## Dispatch
+
+Call a function assigned to an event and pass a message as argument. These messages are stored internally as key/value (event/message) if the event value is a string.
+
+If a message is an object, their attributes will be assigned to an previously stored object to that event.
+
+A function or an object can be dispatched as event. In this case the Function.name or Object.name will be used as event and nothing will be stored.
+
 ```javascript
-dispatch('notify', 'hello, world');
+dispatch('log', 'Hello, view');
+dispatch('print', 'Hello, console');
+dispatch('person', { nick: 'Me' });        // Listener will receive { nick: 'Me' }
+dispatch('person', { fingers: 5 });        // Listener will receive { nick: 'Me', fingers: 5 }
+dispatch({ name: 'person' }, { age: 18 }); // The same listener will receive { age: 18 }
 ```
+
+## Connect
+
 The "connect" function can be used to attach an "element updater" event. It's just a wrapper for a function that return an Element that update its reference every time "dispatch" is called with current event. You can use multiple watch/dispatch events just with spaces between them os setting as array. Each connected function will set 'this' as the rendered element that should be updated on return. If it's the first call, 'this' is a document-fragment. You can verify if 'this' is rendered in DOM using WebAPI this.isConnected boolean.
+
 ```javascript
 document.body.appendChild(
   connect(['notify', 'log'], function() {
@@ -31,13 +66,6 @@ document.body.appendChild(
 );
 ```
 
-## Store
-Everytime an event is dispatched, the second argument is stored in store function with the event key. You can access the store anytime using this syntax:
-```javascript
-var last_notification = store.notify;
-```
-If the message dispatched is an object, so instead of replace the value, the object dispatched will be merged into the stored object;
-
 ## Router
 ```javascript
 router({
@@ -47,64 +75,9 @@ router({
 ```
 Router is a function with an object that defines routes and function callbacks that will be invoked when some hash router is called. Routes could receive multiple params: the first is the route itself and the others are parameters that will be used as arguments of route callback function.
 
-## Full example
-```javascript
-// Message.js
-import Elements, { connect } from '../../nozes.js';
-const { div, b } = Elements;
+## Examples
 
-function Message({ message }) {
-
-  return div(
-    b('Message: '),
-    message
-  );
-}
-
-export default connect('message', Message);
-```
-```javascript
-// Notifier.js
-import Elements, { dispatch } from '../../nozes.js';
-const { button } = Elements;
-
-function Notifier() {
-  const handleClick = () => {
-    dispatch('message', 'you are notified');
-  }
-
-  return button({ onclick: handleClick }, 'Notify message');
-}
-
-export default Notifier;
-```
-```javascript
-// App.js
-import Elements, { watch, router } from '../../nozes.js';
-import Message from './Message.js';
-import Notifier from './Notifier.js';
-const { div, br, a } = Elements;
-
-function App() {
-  watch('message', (message) => console.log(message));
-
-  return div(
-    a({ href: '#' }, 'Home'),
-    ' | ',
-    a({ href: '#/about' }, 'About'),
-    router({
-      index: () => div('Start page'),
-      about: () => div('About page')
-    }),
-    br(),
-    Notifier(),
-    Message({ message: 'no message yet' })
-  );
-}
-
-document.body.appendChild(App());
-```
-More examples in 'examples' folder
+Examples in 'examples' folder
 
 ## Why 'Nozes'?
 It's a joke, an old brazilian meme called "As árvores somos nozes", that could be translated as "The tree are us". Nozes it's about DOM tree.
