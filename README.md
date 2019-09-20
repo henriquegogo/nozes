@@ -35,7 +35,7 @@ Declarative way to create plain javascript components
 </script>
 ```
 
-## Elements
+### Elements
 
 Has a constructor for each HTML tag that receive parameters that could be objects, functions, strings, numbers or HTML element instances.
 
@@ -54,7 +54,7 @@ div(
 )
 ```
 
-## Watch
+### Watch
 
 Create an event listener that call a function if dispatched. An event can belong to a group.
 
@@ -70,7 +70,7 @@ watch('print', console.log);             // Another listener was created (now th
 watch('', alert.bind(this));             // Will call alert if any event is dispatched
 ```
 
-## Dispatch
+### Dispatch
 
 Call a function assigned to an event and pass a message as argument. These messages are stored internally as key/value (event/message) if the event value is a string.
 
@@ -86,7 +86,7 @@ dispatch('person', { fingers: 5 });        // Listener will receive { nick: 'Me'
 dispatch({ name: 'person' }, { age: 18 }); // The same listener will receive { age: 18 }
 ```
 
-## Connect
+### Connect
 
 The "connect" function can be used to attach an "element updater" event. It's just a wrapper for a function that return an Element that update its reference every time "dispatch" is called with current event. You can use multiple watch/dispatch events just with spaces between them os setting as array. Each connected function will set 'this' as the rendered element that should be updated on return. If it's the first call, 'this' is a document-fragment. You can verify if 'this' is rendered in DOM using WebAPI this.isConnected boolean.
 
@@ -100,7 +100,7 @@ document.body.appendChild(
 );
 ```
 
-## Router
+### Router
 ```javascript
 router({
   index: () => a({ href: '#/hello/world/earth' }, 'Home page'),
@@ -109,21 +109,21 @@ router({
 ```
 Router is a function with an object that defines routes and function callbacks that will be invoked when some hash router is called. Routes could receive multiple params: the first is the route itself and the others are parameters that will be used as arguments of route callback function.
 
-# Tests
+## Tests
 
 ```
 $ node test
 ```
 
-# Examples
+## Examples
 
 Examples in 'examples' folder
 
-# Why 'Nozes'?
+## Why 'Nozes'?
 It's a joke, an old brazilian meme called "As árvores somos nozes", that could be translated as "The tree are us". Nozes it's about DOM tree.
 
 ## Special thanks
 [Bruno Facundo](http://github.com/BrunoFacundo) that tested first implementations, suggested improvements and did pair programming on "watch / connect / dispatch" implementations.
 
-# License
+## License
 MIT
