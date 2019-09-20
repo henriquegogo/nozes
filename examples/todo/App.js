@@ -1,6 +1,7 @@
+import { createElement, watch, dispatch } from './init.js';
 import InputForm from './InputForm.js';
 import Tasks from './Tasks.js';
-const { watch, dispatch, div, h1 } = Nozes;
+const { div, h1 } = createElement;
 
 function App() {
   watch('tasklist', console.log);
@@ -13,4 +14,4 @@ function App() {
   );
 }
 
-export default App;
+document.body.appendChild(App());

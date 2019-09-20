@@ -1,5 +1,6 @@
 // Message.js
-const { connect, div, b } = Nozes;
+import { createElement, connect } from './init.js';
+const { div, b } = createElement;
 
 function Message({ message }) {
 

@@ -1,4 +1,5 @@
-const { dispatch, input } = Nozes;
+import { createElement, dispatch } from './init.js';
+const { input } = createElement;
 
 setTimeout(() => dispatch('add', ['Async first item', 'Async second item']), 100);
 

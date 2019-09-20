@@ -1,14 +1,15 @@
-(function(global) {
-  var store = {}, listeners = [], Nozes = global.Nozes = 'a abbr address area article aside b base bdi bdo blockquote body br button canvas caption cite code col colgroup data datalist dd del details dfn dialog div dl dt em embed fieldset figure footer form h1 h2 h3 h4 h5 h6 head header hgroup hr html i iframe img input ins kbd keygen label legend li link main map mark menu menuitem meta meter nav noscript object ol optgroup option output p param pre progress q rb rp rt rtc ruby s samp script section select small source span strong style sub summary sup table tbody td template textarea tfoot th thead time title tr track u ul video wbr n-connect'.split(' ').reduce(function(result, tag) {
-    result[tag] = createElement.bind(undefined, tag);
-    return result;
-  }, { createElement: createElement, watch: watch, dispatch: dispatch, connect: connect, router: router });
+(function(global) { global.Nozes = function() {
+  var store = {}, listeners = [];
+  
+  'a abbr address area article aside b base bdi bdo blockquote body br button canvas caption cite code col colgroup data datalist dd del details dfn dialog div dl dt em embed fieldset figure footer form h1 h2 h3 h4 h5 h6 head header hgroup hr html i iframe img input ins kbd keygen label legend li link main map mark menu menuitem meta meter nav noscript object ol optgroup option output p param pre progress q rb rp rt rtc ruby s samp script section select small source span strong style sub summary sup table tbody td template textarea tfoot th thead time title tr track u ul video wbr n-connect'.split(' ').forEach(function(tag) {
+    createElement[tag] = createElement.bind(undefined, tag);
+  });
 
   function createElement(tag) {
     if (tag.constructor === Function) return tag.apply(undefined, [].slice.call(arguments).slice(1));
     var element = document.createElement(tag);
     [].slice.call(arguments).slice(1).forEach(function(arg) {
-      arg === null || arg.constructor === Object ? Object.assign(element, arg) :
+      arg == null || arg.constructor === Object ? Object.assign(element, arg) :
       arg.constructor === Function ? arg(element) :
       arg.constructor === String || arg.constructor === Number ? element.appendChild(document.createTextNode(arg)) :
       arg.constructor.name.includes('Element') && element.appendChild(arg);
@@ -46,7 +47,7 @@
         }, func.name);
       });
       element = func.call({ isConnected: false }, props = Object.assign({}, props, store));
-      return Nozes['n-connect']({ title: func.name }, element);
+      return createElement['n-connect']({ title: func.name }, element);
     }
   }
 
@@ -57,4 +58,6 @@
       return path[1] && routes[path[1]] ? routes[path[1]].apply(undefined, path.slice(2)) : routes.index.apply(undefined, path.slice(2));
     })();
   }
-})(typeof module !== "undefined" ? module.exports : window);
+
+  return { createElement: createElement, watch: watch, dispatch: dispatch, connect: connect, router: router };
+}})(typeof module !== "undefined" ? module.exports : window);

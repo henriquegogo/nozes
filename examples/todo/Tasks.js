@@ -1,5 +1,6 @@
+import { createElement, watch, dispatch, connect } from './init.js';
 import Footer from './Footer.js';
-const { connect, watch, dispatch, div, ul, li, a } = Nozes;
+const { div, ul, li, a } = createElement;
 
 function Tasks({ tasklist = [] }) {
 

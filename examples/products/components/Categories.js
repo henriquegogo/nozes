@@ -1,4 +1,5 @@
-const { connect, dispatch, div, img, a } = Nozes;
+import { createElement, dispatch, connect } from '../init.js';
+const { div, img, a } = createElement;
 
 function Categories({ categories = [] }) {
 

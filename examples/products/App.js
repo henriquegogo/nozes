@@ -1,4 +1,5 @@
-const { router, div, main, footer } = Nozes;
+import { createElement, router } from './init.js';
+const { div, main, footer } = createElement;
 
 import Header from './components/Header.js';
 import Main from './components/Main.js';
@@ -18,4 +19,4 @@ function App() {
   );
 }
 
-export default App;
+document.body.appendChild(App());

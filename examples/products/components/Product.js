@@ -1,4 +1,5 @@
-const { connect, dispatch, section, h1, p } = Nozes;
+import { createElement, dispatch, connect } from '../init.js';
+const { section, h1, p } = createElement;
 
 function Product(product = {}) {
 

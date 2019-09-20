@@ -1,4 +1,5 @@
-const { connect, dispatch, div, button, b } = Nozes;
+import { createElement, dispatch, connect } from './init.js';
+const { div, button, b } = createElement;
 
 function Footer({ tasklist = [] }) {
 
