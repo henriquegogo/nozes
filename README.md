@@ -109,15 +109,21 @@ router({
 ```
 Router is a function with an object that defines routes and function callbacks that will be invoked when some hash router is called. Routes could receive multiple params: the first is the route itself and the others are parameters that will be used as arguments of route callback function.
 
-## Examples
+# Tests
+
+```
+$ node test
+```
+
+# Examples
 
 Examples in 'examples' folder
 
-## Why 'Nozes'?
+# Why 'Nozes'?
 It's a joke, an old brazilian meme called "As árvores somos nozes", that could be translated as "The tree are us". Nozes it's about DOM tree.
 
 ## Special thanks
 [Bruno Facundo](http://github.com/BrunoFacundo) that tested first implementations, suggested improvements and did pair programming on "watch / connect / dispatch" implementations.
 
-## License
+# License
 MIT
