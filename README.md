@@ -7,7 +7,8 @@ Declarative way to create plain javascript components
 <script src="./nozes.js"></script>
 <script>
 (function() {
-  Object.assign(this, Nozes);
+  const { createElement, watch, dispatch } = new Nozes();
+  const { div, p, button, h1 } = createElement;
 
   function Message(msg) {
     var handleClick = function() {
