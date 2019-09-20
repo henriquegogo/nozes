@@ -1,5 +1,6 @@
+import { createElement } from './init.js';
 import Message from './Message.js';
-const { h2 } = Nozes;
+const { h2 } = createElement;
 
 function App() {
   return (
@@ -11,4 +12,4 @@ function App() {
   );
 }
 
-export default App;
+document.body.appendChild(App());
