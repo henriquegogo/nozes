@@ -109,10 +109,10 @@ router({
 ```
 Router is a function with an object that defines routes and function callbacks that will be invoked when some hash router is called. Routes could receive multiple params: the first is the route itself and the others are parameters that will be used as arguments of route callback function.
 
-## Tests
+## Run tests
 
-```
-$ node test
+```sh
+node test
 ```
 
 ## Examples
