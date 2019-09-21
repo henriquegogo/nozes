@@ -58,7 +58,7 @@
   });
 
   describe('Watch and Dispatch', it => {
-    test('watch function create an event listener that call a function if dispatched', it => {
+    test('watch creates an event listener that call a function if dispatched', it => {
       let expected = 'old value';
 
       watch('test', value => expected = value);
