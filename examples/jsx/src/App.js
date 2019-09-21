@@ -1,4 +1,4 @@
-import { createElement } from './init.js';
+import { createElement } from '../../../init.js';
 import Message from './Message.js';
 const { h2 } = createElement;
 
