@@ -1,5 +1,5 @@
 // Message.js
-import { createElement, connect } from './init.js';
+import { createElement, connect } from '../../init.js';
 const { div, b } = createElement;
 
 function Message({ message }) {

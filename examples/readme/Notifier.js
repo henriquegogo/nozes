@@ -1,5 +1,5 @@
 // Notifier.js
-import { createElement, dispatch } from './init.js';
+import { createElement, dispatch } from '../../init.js';
 const { button } = createElement;
 
 function Notifier() {

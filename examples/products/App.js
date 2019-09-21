@@ -1,4 +1,4 @@
-import { createElement, router } from './init.js';
+import { createElement, router } from '../../init.js';
 const { div, main, footer } = createElement;
 
 import Header from './components/Header.js';

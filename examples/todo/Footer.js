@@ -1,4 +1,4 @@
-import { createElement, dispatch, connect } from './init.js';
+import { createElement, dispatch, connect } from '../../init.js';
 const { div, button, b } = createElement;
 
 function Footer({ tasklist = [] }) {

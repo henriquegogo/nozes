@@ -1,4 +1,4 @@
-import { createElement, dispatch, connect } from '../init.js';
+import { createElement, dispatch, connect } from '../../../init.js';
 const { section, h1, p } = createElement;
 
 function Product(product = {}) {

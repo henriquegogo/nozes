@@ -1,4 +1,4 @@
-import { createElement, dispatch, connect } from '../init.js';
+import { createElement, dispatch, connect } from '../../../init.js';
 const { div, a, img, h1, h4 } = createElement;
 
 function ProductsList({ products = [] }) {
