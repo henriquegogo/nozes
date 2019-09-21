@@ -9,20 +9,20 @@
       [ createElement, watch, dispatch, connect, router ] = Object.values(Nozes());
     });
 
-    test('has a generic varructor for any HTML tag', it => {
+    test('has a generic constructor for any HTML tag', it => {
       const divElement = createElement('div');
 
       return assert(divElement);
     });
 
-    test('has a varructor for each HTML tag', it => {
+    test('has a constructor for each HTML tag', it => {
       const divElement = createElement.div();
       const spanElement = createElement.span();
 
       return assert(divElement && spanElement);
     });
 
-    test('the return of any varructor is an HTMLElement', it => {
+    test('the return of any constructor is an HTMLElement', it => {
       const divElement = createElement('div');
       const spanElement = createElement.span();
 
