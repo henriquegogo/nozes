@@ -58,7 +58,7 @@ div(
 
 Create an event listener that call a function if dispatched. An event can belong to a group.
 
-Every time the watch function is invoked, a listener is created  unless the event belong to a specific group that already exists. In this case, just the callback function will be replaced.
+Everytime the watch function is invoked, a listener is created unless the event belong to a specific group that already exists. In this case, just the callback function will be replaced.
 
 An event can be a blank string. In this case, this listener will be called everytime any event is dispatched.
 
