@@ -103,26 +103,70 @@
     });
   });
 
+  describe('Connect', it => {
+    test('wrap a function that returns a span with "data-connect" attribute with the original function name as value', it => {
+      const div = createElement.div; 
+
+      function TestComponent() {
+        return div();
+      }
+
+      const testElement = connect(TestComponent)();
+
+      return assert(testElement.tagName === 'SPAN' && testElement['data-connect']);
+    });
+
+    test('watch the function and send first prop as parameter if dispatched', it => {
+      const div = createElement.div; 
+      let message = null;
+
+      function TestComponent(props) {
+        message = props.message;
+        return div();
+      }
+
+      connect(TestComponent)();
+      dispatch(TestComponent, { message: 'New message' });
+
+      return assert(message === 'New message');
+    });
+
+    test('connected functions receive dispatched messages merged by new props', it => {
+      const div = createElement.div; 
+      let receivedProps = null;
+
+      dispatch('foo', 'bar');
+
+      function TestComponent(props) {
+        receivedProps = props;
+        return div();
+      }
+
+      connect(TestComponent)();
+      dispatch(TestComponent, { message: 'New message' });
+
+      return assert(receivedProps.foo && receivedProps.message);
+    });
+  });
+
   done();
 })(function init() {
   globalThis.results = [];
   globalThis.window = {};
+  globalThis.Node = function Node() {},
   globalThis.document = {
     createElement: function(tag) {
       return {
         constructor: function HTMLElement() {},
-        tagName: tag.toUpperCase(),
-        children: [],
-        innerHTML: '',
-        appendChild: function(child) {
-          if (typeof child === 'string') this.innerHTML = child;
-          else this.children.push(child);
-        }
+        tagName: tag.toUpperCase(), children: [], innerHTML: '',
+        parentNode: { replaceChild: function(neo, old) { Object.assign(old, neo) } },
+        isEqualNode: function() { return false },
+        setAttribute: function(attr, value) { this[attr] = value },
+        appendChild: function(child) { typeof child === 'string' ? (this.innerHTML = child) : this.children.push(child) }
       }
     },
-    createTextNode: function(text) {
-      return text;
-    }
+    createTextNode: function(text) { return text },
+    createDocumentFragment: function(text) { return text }
   }
 },
 function describe(text, func) { console.group('\n\x1b[37m', text); func(); console.groupEnd() },
