@@ -105,7 +105,7 @@
 
   describe('Connect', it => {
     test('wrap a function that returns a span with "data-connect" attribute with the original function name as value', it => {
-      const div = createElement.div; 
+      const { div } = createElement; 
 
       function TestComponent() {
         return div();
@@ -117,22 +117,22 @@
     });
 
     test('watch the function and send first prop as parameter if dispatched', it => {
-      const div = createElement.div; 
-      let message = null;
+      const { div } = createElement; 
+      let msg = null;
 
-      function TestComponent(props) {
-        message = props.message;
+      function TestComponent({ message }) {
+        msg = message;
         return div();
       }
 
       connect(TestComponent)();
       dispatch(TestComponent, { message: 'New message' });
 
-      return assert(message === 'New message');
+      return assert(msg === 'New message');
     });
 
     test('connected functions receive dispatched messages merged by new props', it => {
-      const div = createElement.div; 
+      const { div } = createElement; 
       let receivedProps = null;
 
       dispatch('foo', 'bar');
@@ -147,23 +147,73 @@
 
       return assert(receivedProps.foo && receivedProps.message);
     });
+
+    test('dom element will be replaced everytime function is dispatched', it => {
+      const { div, span } = createElement; 
+
+      function TestComponent({ showSpan }) {
+        return showSpan ? span() : div();
+      }
+
+      const connectedElement = connect(TestComponent)();
+      const initialElementTagName = connectedElement.children[0].tagName;
+
+      dispatch(TestComponent, { showSpan: true });
+      const updatedElementTagName = connectedElement.children[0].tagName;
+
+      return assert(initialElementTagName === 'DIV' && updatedElementTagName === 'SPAN');
+    });
+
+    test('update if a listener string event is dispatched', it => {
+      const { div } = createElement; 
+      let receivedProps = null;
+
+
+      function TestComponent(props) {
+        receivedProps = props;
+        return div();
+      }
+
+      connect('eventstring', TestComponent)();
+      dispatch('eventstring', 'Event dispatched');
+
+      return assert(receivedProps.eventstring === 'Event dispatched');
+    });
+
+    test('listen multiple events', it => {
+      const { div } = createElement; 
+      let p = null;
+
+
+      function TestComponent(props) {
+        p = props;
+        return div();
+      }
+
+      connect(['event1', 'event2'], TestComponent)();
+      dispatch('event1', '1 OK');
+      dispatch('event2', '2 OK');
+      dispatch(TestComponent, { msg: 'OK' });
+
+      return assert(p.event1 === '1 OK' && p.event2 === '2 OK' && p.msg === 'OK');
+    });
   });
 
   done();
 })(function init() {
   globalThis.results = [];
   globalThis.window = {};
-  globalThis.Node = function Node() {},
+  globalThis.Node = function Node(attr) { return Object.assign(this, attr) },
   globalThis.document = {
     createElement: function(tag) {
-      return {
+      return new globalThis.Node({
         constructor: function HTMLElement() {},
         tagName: tag.toUpperCase(), children: [], innerHTML: '',
         parentNode: { replaceChild: function(neo, old) { Object.assign(old, neo) } },
         isEqualNode: function() { return false },
         setAttribute: function(attr, value) { this[attr] = value },
         appendChild: function(child) { typeof child === 'string' ? (this.innerHTML = child) : this.children.push(child) }
-      }
+      });
     },
     createTextNode: function(text) { return text },
     createDocumentFragment: function(text) { return text }
