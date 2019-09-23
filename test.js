@@ -223,12 +223,12 @@
 
   done();
 })(function init() {
-  globalThis.results = [];
-  globalThis.window = {};
-  globalThis.Node = function Node(attr) { return Object.assign(this, attr) },
-  globalThis.document = {
+  global.results = [];
+  global.window = {};
+  global.Node = function Node(attr) { return Object.assign(this, attr) },
+  global.document = {
     createElement: function(tag) {
-      return new globalThis.Node({
+      return new global.Node({
         constructor: function HTMLElement() {},
         tagName: tag.toUpperCase(), children: [], innerHTML: '',
         parentNode: { replaceChild: function(neo, old) { Object.assign(old, neo) } },
