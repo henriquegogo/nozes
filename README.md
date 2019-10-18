@@ -56,9 +56,11 @@ div(
 
 You have different ways to create an element using createElement:
 
-- createElement.div()
-- createElement('div')
-- createElement('<div></div>')
+```javascript
+createElement.div()
+createElement('div')
+createElement('<div></div>')
+```
 
 ### Watch
 
