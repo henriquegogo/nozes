@@ -29,6 +29,12 @@
       return assert(divElement.tagName === 'DIV' && spanElement.tagName === 'SPAN');
     });
 
+    test('constructs a DOM element from a string', it => {
+      const brElement = createElement('<br />');
+
+      return assert(brElement.tagName === 'BR');
+    });
+
     test('if a parameter is an object, their attributes will be assigned to that element', it => {
       const divElement = createElement.div({ title: 'Title' });
 
@@ -226,6 +232,11 @@
   global.results = [];
   global.window = {};
   global.Node = function Node(attr) { return Object.assign(this, attr) },
+  global.DOMParser = function DOMParser() {
+    return { parseFromString: function(str) {
+      return { body: { firstChild: global.document.createElement(str.match(/<(.*) \/>/)[1]) } };
+    }};
+  },
   global.document = {
     createElement: function(tag) {
       return new global.Node({

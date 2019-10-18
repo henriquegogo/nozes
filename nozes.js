@@ -7,7 +7,7 @@
 
   function createElement(tag) {
     if (tag.constructor === Function) return tag.apply(undefined, [].slice.call(arguments).slice(1));
-    var element = document.createElement(tag);
+    var element = tag.trim()[0] === '<' ? new DOMParser().parseFromString(tag, 'text/html').body.firstChild : document.createElement(tag);
     [].slice.call(arguments).slice(1).forEach(function(arg) {
       arg == null || arg.constructor === Object ? Object.assign(element, arg) :
       arg.constructor === Function ? arg(element) :

@@ -54,6 +54,12 @@ div(
 )
 ```
 
+You have different ways to create an element using createElement:
+
+- createElement.div()
+- createElement('div')
+- createElement('<div></div>')
+
 ### Watch
 
 Create an event listener that call a function if dispatched. An event can belong to a group.
