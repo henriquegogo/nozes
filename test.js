@@ -22,17 +22,19 @@
       return assert(divElement && spanElement);
     });
 
-    test('the return of any constructor is an HTMLElement', it => {
-      const divElement = createElement('div');
-      const spanElement = createElement.span();
-
-      return assert(divElement.tagName === 'DIV' && spanElement.tagName === 'SPAN');
-    });
-
     test('constructs a DOM element from a string', it => {
       const brElement = createElement('<br />');
 
       return assert(brElement.tagName === 'BR');
+    });
+
+
+    test('the return of any constructor is an HTMLElement', it => {
+      const divElement = createElement('div');
+      const brElement = createElement('<br />');
+      const spanElement = createElement.span();
+
+      return assert(divElement.tagName === 'DIV' && brElement.tagName === 'BR' && spanElement.tagName === 'SPAN');
     });
 
     test('if a parameter is an object, their attributes will be assigned to that element', it => {
