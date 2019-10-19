@@ -1,7 +1,7 @@
-import { createElement } from '../../../init.js';
+import { createElement, dispatch } from '../../../init.js';
 
-function Message(msg) {
-  return <p>{msg}</p>;
+function Message(props, msg) {
+  return <button onclick={() => dispatch('log', 'hello')}>{msg}</button>;
 }
 
 export default Message;

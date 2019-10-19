@@ -1,8 +1,10 @@
-import { createElement } from '../../../init.js';
+import { createElement, watch } from '../../../init.js';
 import Message from './Message.js';
 const { h2 } = createElement;
 
 function App() {
+  watch('log', console.log);
+
   return (
     <div>
       <h1>Hello, world</h1>
