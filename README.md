@@ -123,6 +123,12 @@ Router is a function with an object that defines routes and function callbacks t
 node test
 ```
 
+## Build minified
+
+```sh
+npx uglify-js nozes.js -m > dist/nozes.min.js
+```
+
 ## Examples
 
 Examples in 'examples' folder
