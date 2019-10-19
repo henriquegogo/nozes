@@ -126,7 +126,7 @@ node test
 ## Build minified
 
 ```sh
-npx uglify-js nozes.js -m --keep-fnames > dist/nozes.min.js
+npx uglify-js nozes.js -m reserved=['hashchange'] > dist/nozes.min.js
 ```
 
 ## Examples

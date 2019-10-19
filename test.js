@@ -206,7 +206,7 @@
     test('window.onhashchange dispatch a watched hashchange event', it => {
       router({});
 
-      return assert(window.onhashchange.name === 'bound dispatch');
+      return assert(window.onhashchange.name === dispatch.bind(undefined).name);
     });
 
     test('returns a connected wrapper', it => {
