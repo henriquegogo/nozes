@@ -53,11 +53,18 @@
       return assert(divElement.innerHTML === 'Body', spanElement.innerHTML === 1);
     });
 
-    test('if a parameter is a a function, it\'ll be called with the element as first parameter', it => {
+    test('if a parameter is a function, it\'ll be called with the element as first parameter', it => {
       let ref;
       const divElement = createElement.div(function(me) { ref = me });
 
       return assert(divElement === ref);
+    });
+
+    test('if a parameter is an array, each item will be evaluated like other parameters', it => {
+      const spanElement = createElement.span();
+      const divElement = createElement.div([spanElement, { title: 'Title' }]);
+
+      return assert(divElement.title === 'Title' && divElement.children[0] === spanElement);
     });
   });
 

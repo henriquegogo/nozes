@@ -45,6 +45,7 @@ The return of any of these constructors are HTML elements created with document.
 - If it's another HTML element, this will be appended as child of that.
 - If it's a string or a number, a TextNode will be created with the value and appended as child of the element.
 - If a function, it'll be called with the element as first parameter.
+- If an array, each item of this array will be evaluated like others constructor parameters.
 
 ```javascript
 div(

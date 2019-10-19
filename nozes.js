@@ -8,9 +8,10 @@
   function createElement(tag) {
     if (tag.constructor === Function) return tag.apply(undefined, [].slice.call(arguments).slice(1));
     var element = tag.trim()[0] === '<' ? new DOMParser().parseFromString(tag, 'text/html').body.firstChild : document.createElement(tag);
-    [].slice.call(arguments).slice(1).forEach(function(arg) {
+    [].slice.call(arguments).slice(1).forEach(function appendArgs(arg) {
       arg == null || arg.constructor === Object ? Object.assign(element, arg) :
       arg.constructor === Function ? arg(element) :
+      arg.constructor === Array ? arg.forEach(appendArgs) :
       arg.constructor === String || arg.constructor === Number ? element.appendChild(document.createTextNode(arg)) :
       arg.constructor.name.includes('Element') && element.appendChild(arg);
     });
