@@ -1,14 +1,10 @@
-((init, describe, test, assert, before, done) => {
+((init, describe, test, assert, done) => {
   init();
 
   const Nozes = require('./nozes.js').Nozes;
-  let createElement, watch, dispatch, connect, router;
+  const { createElement, watch, dispatch, connect, router } = new Nozes();
 
   describe('Create element', it => {
-    before(each => {
-      [ createElement, watch, dispatch, connect, router ] = Object.values(Nozes());
-    });
-
     test('has a generic constructor for any HTML tag', it => {
       const divElement = createElement('div');
 
@@ -176,7 +172,6 @@
       const { div } = createElement; 
       let receivedProps = null;
 
-
       function TestComponent(props) {
         receivedProps = props;
         return div();
@@ -209,30 +204,50 @@
 
   describe('Router', it => {
     test('window.onhashchange dispatch a watched hashchange event', it => {
-      return 'NOT IMPLEMENTED';
+      router({});
+
+      return assert(window.onhashchange.name === 'bound dispatch');
     });
 
     test('returns a connected wrapper', it => {
-      return 'NOT IMPLEMENTED';
+      var wrapper = router({});
+
+      return assert(wrapper['data-connect'] === 'hashchange');
     });
 
-    test('call index none params', it => {
-      return 'NOT IMPLEMENTED';
+    test('call index if no hash route', it => {
+      var index_called = false;
+
+      router({ index: () => index_called = true });
+
+      return assert(index_called);
     });
 
     test('call defined route object prop based on route', it => {
-      return 'NOT IMPLEMENTED';
+      var home_called = false;
+      
+      router({ home: () => home_called = true });
+      window.location.hash = '#/home';
+      window.onhashchange();
+
+      return assert(home_called);
     });
 
     test('set props to route function based on route path', it => {
-      return 'NOT IMPLEMENTED';
+      var user_id;
+      
+      router({ user: (id) => user_id = id });
+      window.location.hash = '#/user/10';
+      window.onhashchange();
+
+      return assert(user_id === '10');
     });
   });
 
   done();
 })(function init() {
   global.results = [];
-  global.window = {};
+  global.window = { location: { hash: '' } };
   global.Node = function Node(attr) { return Object.assign(this, attr) },
   global.DOMParser = function DOMParser() {
     return { parseFromString: function(str) {
@@ -257,5 +272,4 @@
 function describe(text, func) { console.group('\n\x1b[37m', text); func(); console.groupEnd() },
 function test(text, func) { console.log(func(), '\x1b[90m', text, '\x1b[37m') },
 function assert(sentence) { return results.push(sentence) && sentence ? '\x1b[32m✓' : '\x1b[31m✗' },
-function before(func) { func() },
 function done() { console.info('\n\x1b[32mTOTAL PASS:', results.filter(i=>i).length, '\n\x1b[31mTOTAL FAIL:', results.filter(i=>!i).length) });

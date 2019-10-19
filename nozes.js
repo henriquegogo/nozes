@@ -55,7 +55,7 @@
     window.onhashchange = dispatch.bind(undefined, { name: 'hashchange' });
     return connect(function hashchange() {
       var path = window.location.hash.split('/');
-      return path[1] && routes[path[1]] ? routes[path[1]].apply(undefined, path.slice(2)) : routes.index.apply(undefined, path.slice(2));
+      return routes[path[1] = path[1] || 'index'] && routes[path[1]].apply(undefined, path.slice(2));
     })();
   }
 
