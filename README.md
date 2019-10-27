@@ -61,6 +61,7 @@ You have different ways to create an element using createElement:
 createElement.div()
 createElement('div')
 createElement('<div></div>')
+createElement({ tagName: 'div', children: [] })
 ```
 
 ### Watch

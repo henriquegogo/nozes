@@ -18,12 +18,24 @@
       return assert(divElement && spanElement);
     });
 
+    test('constructs a DOM element from a json', it => {
+      const ulElement = createElement({
+        tagName: 'ul',
+        children: [
+          { tagName: 'li', innerHTML: 'First' },
+          { tagName: 'li', innerHTML: 'Second' },
+          { tagName: 'li', innerHTML: 'Third' }
+        ]
+      });
+
+      return assert(ulElement.tagName === 'UL' && ulElement.children.length === 3);
+    });
+
     test('constructs a DOM element from a string', it => {
       const brElement = createElement('<br />');
 
       return assert(brElement.tagName === 'BR');
     });
-
 
     test('the return of any constructor is an HTMLElement', it => {
       const divElement = createElement('div');

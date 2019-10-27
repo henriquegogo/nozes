@@ -5,9 +5,10 @@
     createElement[tag] = createElement.bind(undefined, tag);
   });
 
-  function createElement(tag) {
-    if (tag.constructor === Function) return tag.apply(undefined, [].slice.call(arguments).slice(1));
-    var element = tag.trim()[0] === '<' ? new DOMParser().parseFromString(tag, 'text/html').body.firstChild : document.createElement(tag);
+  function createElement(type) {
+    if (type.constructor === Object) return createElement(type.tagName, (type.children || []).map(createElement), (delete type.tagName, delete type.children, type));
+    else if (type.constructor === Function) return type.apply(undefined, [].slice.call(arguments).slice(1));
+    var element = type.trim()[0] === '<' ? new DOMParser().parseFromString(type, 'text/html').body.firstChild : document.createElement(type);
     [].slice.call(arguments).slice(1).forEach(function appendArgs(arg) {
       arg == null || arg.constructor === Object ? Object.assign(element, arg) :
       arg.constructor === Function ? arg(element) :
