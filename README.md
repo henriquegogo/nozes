@@ -1,6 +1,10 @@
 # Nozes
 Declarative way to create plain javascript components
 
+## 5 minutes example
+
+[![Nozes in 5 minutes](http://img.youtube.com/vi/hsQ7YcoRD5M/0.jpg)](https://www.youtube.com/watch?v=hsQ7YcoRD5M)
+
 ## Get started
 
 ```html
