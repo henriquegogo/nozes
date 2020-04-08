@@ -17,7 +17,7 @@
       arg.constructor.name.includes('Element') && element.appendChild(arg);
     });
     return element;
-  };
+  }
   
   function watch(event, func, group) {
     var found_event = listeners.find(function(listener) {
