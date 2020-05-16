@@ -92,7 +92,7 @@
       const className = styleClass(def);
       const style = global.document.head.children.find(i => i.innerHTML.includes(className));
 
-      return assert(style.tagName === 'STYLE' && style.innerHTML === '.' + className + '{display: block}');
+      return assert(style.tagName === 'STYLE' && style.innerHTML === '.' + className + ' {display: block}');
     });
 
     test('accept nested definitions', () => {
