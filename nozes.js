@@ -1,5 +1,5 @@
 (function(global) { global.Nozes = function() {
-  var store = {}, listeners = [];
+  var store = {}, listeners = [], styles = {};
 
   'a abbr address area article aside audio b base bdi bdo blockquote body br button canvas caption cite code col colgroup data datalist dd del details dfn dialog div dl dt em embed fieldset figcaption figure footer form h1 h2 h3 h4 h5 h6 head header hgroup hr html i iframe img input ins kbd label legend li link main map mark math menu meta meter nav noscript object ol optgroup option output p param picture pre progress q rp rt ruby s samp script section select slot small source span strong style sub summary sup svg table tbody td template textarea tfoot th thead time title tr track u ul var video wbr'.split(' ').forEach(function(tag) {
     createElement[tag] = createElement.bind(undefined, tag);
@@ -17,6 +17,12 @@
       arg.constructor.name.includes('Element') && element.appendChild(arg);
     });
     return element;
+  }
+
+  function styleClass(def) {
+    var classname = 's'+Math.random().toString(36).substr(2);
+    !styles[def] && document.head.appendChild(createElement('style', def.replace(/&/g, '.'+(styles[def]=classname))));
+    return styles[def];
   }
   
   function watch(event, func, group) {
@@ -61,5 +67,5 @@
     })();
   }
 
-  return { createElement: createElement, watch: watch, dispatch: dispatch, connect: connect, router: router };
+  return { createElement: createElement, styleClass: styleClass, watch: watch, dispatch: dispatch, connect: connect, router: router };
 }})(typeof module !== "undefined" ? module.exports : window);
