@@ -2,23 +2,23 @@
   init();
 
   const Nozes = require('./nozes.js').Nozes;
-  const { createElement, watch, dispatch, connect, router } = new Nozes();
+  const { createElement, styleClass, watch, dispatch, connect, router } = new Nozes();
 
-  describe('Create element', it => {
-    test('has a generic constructor for any HTML tag', it => {
+  describe('Create element', () => {
+    test('has a generic constructor for any HTML tag', () => {
       const divElement = createElement('div');
 
       return assert(divElement);
     });
 
-    test('has a constructor for each HTML tag', it => {
+    test('has a constructor for each HTML tag', () => {
       const divElement = createElement.div();
       const spanElement = createElement.span();
 
       return assert(divElement && spanElement);
     });
 
-    test('constructs a DOM element from a json', it => {
+    test('constructs a DOM element from a json', () => {
       const ulElement = createElement({
         tagName: 'ul',
         children: [
@@ -31,13 +31,13 @@
       return assert(ulElement.tagName === 'UL' && ulElement.children.length === 3);
     });
 
-    test('constructs a DOM element from a string', it => {
+    test('constructs a DOM element from a string', () => {
       const brElement = createElement('<br />');
 
       return assert(brElement.tagName === 'BR');
     });
 
-    test('the return of any constructor is an HTMLElement', it => {
+    test('the return of any constructor is an HTMLElement', () => {
       const divElement = createElement('div');
       const brElement = createElement('<br />');
       const spanElement = createElement.span();
@@ -45,34 +45,34 @@
       return assert(divElement.tagName === 'DIV' && brElement.tagName === 'BR' && spanElement.tagName === 'SPAN');
     });
 
-    test('if a parameter is an object, their attributes will be assigned to that element', it => {
+    test('if a parameter is an object, their attributes will be assigned to that element', () => {
       const divElement = createElement.div({ title: 'Title' });
 
       return assert(divElement.title === 'Title');
     });
 
-    test('if a parameter is another HTML element, this will be appended as child of that', it => {
+    test('if a parameter is another HTML element, this will be appended as child of that', () => {
       const spanElement = createElement.span();
       const divElement = createElement.div(spanElement);
 
       return assert(divElement.children[0] === spanElement);
     });
 
-    test('if a parameter is a string or a number, a TextNode will be created with the value and appended as child of the element', it => {
+    test('if a parameter is a string or a number, a TextNode will be created with the value and appended as child of the element', () => {
       const divElement = createElement.div('Body');
       const spanElement = createElement.span(1);
 
       return assert(divElement.innerHTML === 'Body', spanElement.innerHTML === 1);
     });
 
-    test('if a parameter is a function, it\'ll be called with the element as first parameter', it => {
+    test('if a parameter is a function, it\'ll be called with the element as first parameter', () => {
       let ref;
       const divElement = createElement.div(function(me) { ref = me });
 
       return assert(divElement === ref);
     });
 
-    test('if a parameter is an array, each item will be evaluated like other parameters', it => {
+    test('if a parameter is an array, each item will be evaluated like other parameters', () => {
       const spanElement = createElement.span();
       const divElement = createElement.div([spanElement, { title: 'Title' }]);
 
@@ -80,8 +80,35 @@
     });
   });
 
-  describe('Watch and Dispatch', it => {
-    test('watch creates an event listener that call a function if dispatched', it => {
+  describe('Style class generator', () => {
+    test('returns a class name', () => {
+      const className = styleClass('');
+
+      return assert(typeof className === 'string' && Number.isNaN(parseInt(className[0])));
+    });
+
+    test('generates a style tag in document head', () => {
+      const def = 'display: block';
+      const className = styleClass(def);
+      const style = global.document.head.children.find(i => i.innerHTML.includes(className));
+
+      return assert(style.tagName === 'STYLE' && style.innerHTML === '.' + className + '{display: block}');
+    });
+
+    test('accept nested definitions', () => {
+      var className = styleClass(`
+        cursor: pointer;
+        &:hover { background: gray }
+        & img.helper { display: inline-block }
+      `);
+      const style = global.document.head.children.find(i => i.innerHTML.includes(className));
+
+      return assert(style.innerHTML.includes('.' + className + ':hover') && style.innerHTML.includes('.' + className + ' img.helper'));
+    });
+  });
+
+  describe('Watch and Dispatch', () => {
+    test('watch creates an event listener that call a function if dispatched', () => {
       let expected = 'old value';
 
       watch('test', value => expected = value);
@@ -90,7 +117,7 @@
       return assert(expected === 'new value');
     });
 
-    test('everytime the watch function is invoked, a listener is created', it => {
+    test('everytime the watch function is invoked, a listener is created', () => {
       let old1 = 'old value 1';
       let old2 = 'old value 2';
       let old3 = 'old value 3';
@@ -103,7 +130,7 @@
       return assert(old1 === 'new value' && old2 === 'new value' && old3 === 'old value 3');
     });
 
-    test('watch an event that already belongs to a group will replace him', it => {
+    test('watch an event that already belongs to a group will replace him', () => {
       let old1 = 'old value 1';
       let old2 = 'old value 2';
 
@@ -114,7 +141,7 @@
       return assert(old1 === 'old value 1' && old2 === 'new value');
     });
 
-    test('blank string event will be dispatched everytime', it => {
+    test('blank string event will be dispatched everytime', () => {
       let messages = [];
 
       watch('', msg => messages.push(msg));
@@ -126,8 +153,8 @@
     });
   });
 
-  describe('Connect', it => {
-    test('wrap a function that returns a span with "data-connect" attribute with the original function name as value', it => {
+  describe('Connect', () => {
+    test('wrap a function that returns a span with "data-connect" attribute with the original function name as value', () => {
       const { div } = createElement; 
 
       function TestComponent() {
@@ -139,7 +166,7 @@
       return assert(testElement.tagName === 'SPAN' && testElement['data-connect']);
     });
 
-    test('watch the function and send first prop as parameter if dispatched', it => {
+    test('watch the function and send first prop as parameter if dispatched', () => {
       const { div } = createElement; 
       let msg = null;
 
@@ -154,7 +181,7 @@
       return assert(msg === 'New message');
     });
 
-    test('connected functions receive dispatched messages merged by new props', it => {
+    test('connected functions receive dispatched messages merged by new props', () => {
       const { div } = createElement; 
       let receivedProps = null;
 
@@ -171,7 +198,7 @@
       return assert(receivedProps.foo && receivedProps.message);
     });
 
-    test('dom element will be replaced everytime function is dispatched', it => {
+    test('dom element will be replaced everytime function is dispatched', () => {
       const { div, span } = createElement; 
 
       function TestComponent({ showSpan }) {
@@ -187,7 +214,7 @@
       return assert(initialElementTagName === 'DIV' && updatedElementTagName === 'SPAN');
     });
 
-    test('update if a listener string event is dispatched', it => {
+    test('update if a listener string event is dispatched', () => {
       const { div } = createElement; 
       let receivedProps = null;
 
@@ -202,7 +229,7 @@
       return assert(receivedProps.eventstring === 'Event dispatched');
     });
 
-    test('listen multiple events', it => {
+    test('listen multiple events', () => {
       const { div } = createElement; 
       let p = null;
 
@@ -221,20 +248,20 @@
     });
   });
 
-  describe('Router', it => {
-    test('window.onhashchange dispatch a watched hashchange event', it => {
+  describe('Router', () => {
+    test('window.onhashchange dispatch a watched hashchange event', () => {
       router({});
 
       return assert(window.onhashchange.name === dispatch.bind(undefined).name);
     });
 
-    test('returns a connected wrapper', it => {
+    test('returns a connected wrapper', () => {
       var wrapper = router({});
 
       return assert(wrapper['data-connect'] === 'hashchange');
     });
 
-    test('call index if no hash route', it => {
+    test('call index if no hash route', () => {
       var index_called = false;
 
       router({ index: () => index_called = true });
@@ -242,7 +269,7 @@
       return assert(index_called);
     });
 
-    test('call defined route object prop based on route', it => {
+    test('call defined route object prop based on route', () => {
       var home_called = false;
       
       router({ home: () => home_called = true });
@@ -252,7 +279,7 @@
       return assert(home_called);
     });
 
-    test('set props to route function based on route path', it => {
+    test('set props to route function based on route path', () => {
       var user_id;
       
       router({ user: (id) => user_id = id });
@@ -285,7 +312,11 @@
       });
     },
     createTextNode: function(text) { return text },
-    createDocumentFragment: function(text) { return text }
+    createDocumentFragment: function(text) { return text },
+    head: {
+      children: [],
+      appendChild: function(child) { global.document.head.children.push(child) }
+    }
   }
 },
 function describe(text, func) { console.group('\n\x1b[37m', text); func(); console.groupEnd() },

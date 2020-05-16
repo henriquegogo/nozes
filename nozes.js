@@ -23,7 +23,7 @@
     var name = 's'+Math.random().toString(36).substr(2);
     var nestedDef = def.replace(/\s*&/, '\n}\n.' + name).replace(/\s*&/g, '\n.' + name).replace(/}\s*$/, '');
     !styles[def] && document.head.appendChild(createElement('style', '.' + (styles[def]=name) + ' {' + nestedDef + '}'));
-    return styles[def]+' ';
+    return styles[def];
   }
   
   function watch(event, func, group) {
