@@ -20,9 +20,10 @@
   }
 
   function styleClass(def) {
-    var classname = 's'+Math.random().toString(36).substr(2);
-    !styles[def] && document.head.appendChild(createElement('style', def.replace(/&/g, '.'+(styles[def]=classname))));
-    return styles[def];
+    var name = 's'+Math.random().toString(36).substr(2);
+    var nestedDef = def.replace(/\s*&/, '\n}\n.' + name).replace(/\s*&/g, '\n.' + name).replace(/}\s*$/, '');
+    !styles[def] && document.head.appendChild(createElement('style', '.' + (styles[def]=name) + ' {' + nestedDef + '}'));
+    return styles[def]+' ';
   }
   
   function watch(event, func, group) {
