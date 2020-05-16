@@ -68,13 +68,36 @@ createElement('<div></div>')
 createElement({ tagName: 'div', children: [] })
 ```
 
+### Styling
+
+Create unique style definitions and return its class name.
+Even if a style is defined multiple times, if the definitions content was the same, just one style will be created and the function returns the unique class name.
+
+```javascript
+var doubleSizeFont = styleClass('font-size:2em');
+section(
+  div({ className: doubleSizeFont }, 'This is a text with 2em'),
+  p({ className: styleClass('font-size:2em') }, 'This paragraph will reuse the same class name created above')
+)
+```
+
+Nested definitions are accepted. The "&" character will be replaced by auto generated class name. Just one nesting level is accepted.
+
+```javascript
+var className = styleClass(`
+  cursor: pointer;
+  &:hover { background: gray }
+  & img.helper { display: inline-block }
+`);
+```
+
 ### Watch
 
 Create an event listener that call a function if dispatched. An event can belong to a group.
 
-Everytime the watch function is invoked, a listener is created unless the event belong to a specific group that already exists. In this case, just the callback function will be replaced.
+Every time the watch function is invoked, a listener is created unless the event belong to a specific group that already exists. In this case, just the callback function will be replaced.
 
-An event can be a blank string. In this case, this listener will be called everytime any event is dispatched.
+An event can be a blank string. In this case, this listener will be called every time any event is dispatched.
 
 ```javascript
 watch('log', alert.bind(this), 'view');  // A listener was created with a group
@@ -102,7 +125,7 @@ dispatch({ name: 'person' }, { age: 18 }); // The same listener will receive { a
 
 ### Connect
 
-The "connect" function can be used to attach an "element updater" event. It's just a wrapper for a function that return an Element that update its reference every time "dispatch" is called with current event. You can use multiple watch/dispatch events just with spaces between them os setting as array. Each connected function will set 'this' as the rendered element that should be updated on return. If it's the first call, 'this' is a document-fragment. You can verify if 'this' is rendered in DOM using WebAPI this.isConnected boolean.
+The "connect" function can be used to attach an "element updater" event. It's just a wrapper for a function that return an Element that update its reference every time "dispatch" is called with current event. You can use multiple watch/dispatch events just with spaces between them or setting as array. Each connected function will set 'this' as the rendered element that should be updated on return. If it's the first call, 'this' is a document-fragment. You can verify if 'this' is rendered in DOM using WebAPI this.isConnected boolean.
 
 ```javascript
 document.body.appendChild(
@@ -121,7 +144,7 @@ router({
   hello: (param, name) => a({ href: '#' }, 'Hello, ' + param + ' (' + name + ')')
 })
 ```
-Router is a function with an object that defines routes and function callbacks that will be invoked when some hash router is called. Routes could receive multiple params: the first is the route itself and the others are parameters that will be used as arguments of route callback function.
+Router is a function with an object that defines routes and function callbacks that will be invoked when some hash router is called. Routes could receive multiple parameters: the first is the route itself and the others are parameters that will be used as arguments of route callback function.
 
 ## Run tests
 
