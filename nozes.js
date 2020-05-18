@@ -21,7 +21,7 @@
 
   function styleClass(def) {
     var name = 's'+Math.random().toString(36).substr(2);
-    var nestedDef = def.replace(/\s*&/, '\n}\n.' + name).replace(/\s*&/g, '\n.' + name).replace(/}\s*$/, '');
+    var nestedDef = def.replace(/[&@]/, '} $&').replace(/&/g, '.' + name).replace(/}\s*$/, '');
     !styles[def] && document.head.appendChild(createElement('style', '.' + (styles[def]=name) + ' {' + nestedDef + '}'));
     return styles[def];
   }
