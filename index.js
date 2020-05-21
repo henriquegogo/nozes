@@ -1,5 +1,5 @@
 import './nozes.js';
-const nozes = new Nozes();
+const nozes = new window.Nozes();
 export const createElement = nozes.createElement;
 export const watch = nozes.watch;
 export const dispatch = nozes.dispatch;

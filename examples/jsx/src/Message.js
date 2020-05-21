@@ -1,4 +1,4 @@
-import { createElement, dispatch } from '../../../init.js';
+import { createElement, dispatch } from '../../../index.js';
 
 function Message(props, msg) {
   return <button onclick={() => dispatch('log', 'hello')}>{msg}</button>;

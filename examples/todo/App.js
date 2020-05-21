@@ -1,4 +1,4 @@
-import { createElement, watch, dispatch } from '../../init.js';
+import { createElement, watch, dispatch } from '../../index.js';
 import InputForm from './InputForm.js';
 import Tasks from './Tasks.js';
 const { div, h1 } = createElement;

@@ -1,4 +1,4 @@
-import { createElement, dispatch } from '../../init.js';
+import { createElement, dispatch } from '../../index.js';
 const { input } = createElement;
 
 setTimeout(() => dispatch('add', ['Async first item', 'Async second item']), 100);
