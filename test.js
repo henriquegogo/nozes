@@ -1,5 +1,5 @@
 ((init, describe, test, assert, done) => {
-  init();
+  const { document } = init();
 
   const Nozes = require('./nozes.js').Nozes;
   const { createElement, styleClass, watch, dispatch, connect, router } = new Nozes();
@@ -97,7 +97,7 @@
     test('generates a style tag in document head', () => {
       const def = 'display: block';
       const className = styleClass(def);
-      const style = global.document.head.children.find(i => i.innerHTML.includes(className));
+      const style = document.head.children.find(i => i.innerHTML.includes(className));
 
       return assert(style.tagName === 'STYLE' && style.innerHTML === '.' + className + ' {display: block}');
     });
@@ -108,7 +108,7 @@
         &:hover { background: gray }
         & img.helper { display: inline-block }
       `);
-      const style = global.document.head.children.find(i => i.innerHTML.includes(className));
+      const style = document.head.children.find(i => i.innerHTML.includes(className));
 
       return assert(style.innerHTML.includes('.' + className + ':hover') && style.innerHTML.includes('.' + className + ' img.helper'));
     });
@@ -325,6 +325,7 @@
       appendChild: function(child) { global.document.head.children.push(child) }
     }
   }
+  return global;
 },
 function describe(text, func) { console.group('\n\x1b[37m', text); func(); console.groupEnd() },
 function test(text, func) { console.log(func(), '\x1b[90m', text, '\x1b[37m') },
