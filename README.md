@@ -96,7 +96,7 @@ It's possible to set style as a string property or an object.
 ```javascript
 section(
   div({style: 'max-width: 200px'}, 'Limited width container'),
-  div({style: { maxWidth: 200 }, 'Limited width container')
+  div({style: { maxWidth: '200px' }}, 'Limited width container')
 )
 ```
 
