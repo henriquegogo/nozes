@@ -78,6 +78,13 @@
 
       return assert(divElement.title === 'Title' && divElement.children[0] === spanElement);
     });
+
+    test('a style parameter can be set as string or object', () => {
+      const redElement = createElement.div({ style: 'color: red' });
+      const blueElement = createElement.div({ style: { color: 'blue'} });
+
+      return assert(redElement.style === 'color: red' && blueElement.style.color === 'blue');
+    });
   });
 
   describe('Style class generator', () => {
