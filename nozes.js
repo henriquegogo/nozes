@@ -1,22 +1,23 @@
 (function(global) { global.Nozes = function() {
-  var store = {}, listeners = [], styles = {};
+  var store = {}, listeners = [], styles = {}, merge = Object.assign;
+  function is(something, constructor) { return something && something.constructor === constructor }
 
   'a abbr address area article aside audio b base bdi bdo blockquote body br button canvas caption cite code col colgroup data datalist dd del details dfn dialog div dl dt em embed fieldset figcaption figure footer form h1 h2 h3 h4 h5 h6 head header hgroup hr html i iframe img input ins kbd label legend li link main map mark math menu meta meter nav noscript object ol optgroup option output p param picture pre progress q rp rt ruby s samp script section select slot small source span strong style sub summary sup svg table tbody td template textarea tfoot th thead time title tr track u ul var video wbr'.split(' ').forEach(function(tag) {
     createElement[tag] = createElement.bind(undefined, tag);
   });
 
   function createElement(type) {
-    if (type.constructor === Object) return createElement(type.tagName, (type.children || []).map(createElement), (delete type.tagName, delete type.children, type));
-    else if (type.constructor === Function) return type.apply(undefined, [].slice.call(arguments).slice(1));
-    var element = type.trim()[0] === '<' ? new DOMParser().parseFromString(type, 'text/html').body.firstChild : document.createElement(type);
+    if (is(type, Object)) return createElement(type.tagName, (type.children || []).map(createElement), (delete type.tagName, delete type.children, type));
+    else if (is(type, Function)) return type.apply(undefined, [].slice.call(arguments).slice(1));
+    var el = type.trim()[0] === '<' ? new DOMParser().parseFromString(type, 'text/html').body.firstChild : document.createElement(type);
     [].slice.call(arguments).slice(1).forEach(function appendArgs(arg) {
-      arg == null || arg.constructor === Object ? Object.assign(element, arg) :
-      arg.constructor === Function ? arg(element) :
-      arg.constructor === Array ? arg.forEach(appendArgs) :
-      arg.constructor === String || arg.constructor === Number ? element.appendChild(document.createTextNode(arg)) :
-      arg.constructor.name.includes('Element') && element.appendChild(arg);
+      is(arg, Object) ? merge(el, arg) && is(arg.style || '', Object) && merge(el.style, arg.style) :
+      is(arg, Function) ? arg(el) :
+      is(arg, Array) ? arg.forEach(appendArgs) :
+      is(arg, String) || is(arg, Number) ? el.appendChild(document.createTextNode(arg)) :
+      arg && arg.constructor.name.includes('Element') && el.appendChild(arg);
     });
-    return element;
+    return el;
   }
 
   function styleClass(def) {
@@ -30,11 +31,11 @@
     var found_event = listeners.find(function(listener) {
       return group !== undefined && listener.group === group && listener.event === event;
     });
-    found_event ? Object.assign(found_event, { action: func }) : listeners.push({ event: event, action: func, group: group });
+    found_event ? merge(found_event, { action: func }) : listeners.push({ event: event, action: func, group: group });
   }
   
   function dispatch(event, msg) {
-    event.constructor === String && (msg = store[event] = msg.constructor === Object ? Object.assign({}, store[event], msg) : msg);
+    is(event, String) && (msg = store[event] = is(msg, Object) ? merge({}, store[event], msg) : msg);
     listeners.forEach(function(listener) {
       if (listener.event === (event.name || event) || !listener.event) {
         listener.action(msg);
@@ -43,20 +44,20 @@
   }
   
   function connect(events, func) {
-    events.constructor === Function ? (func = events, events = []) : !Array.isArray(events) && (events = [events]);
+    is(events, Function) ? (func = events, events = []) : !Array.isArray(events) && (events = [events]);
     return function(props) {
-      var element = document.createDocumentFragment();
+      var el = document.createDocumentFragment();
       events.concat(func.name).forEach(function(event) {
         watch(event = event.name || event, function(new_props) {
-          var updated = func.call({ isConnected: true }, props = Object.assign({}, props, store, event === func.name && new_props));
-          if (element != null && element.parentNode && updated instanceof Node && !element.isEqualNode(updated)) {
-            element.parentNode.replaceChild(updated, element);
-            element = updated;
+          var updated = func.call({ isConnected: true }, props = merge({}, props, store, event === func.name && new_props));
+          if (el != null && el.parentNode && updated instanceof Node && !el.isEqualNode(updated)) {
+            el.parentNode.replaceChild(updated, el);
+            el = updated;
           }
         }, func.name);
       });
-      element = func.call({ isConnected: false }, props = Object.assign({}, props, store));
-      return createElement('span', element, function(span) { span.setAttribute('data-connect', func.name) });
+      el = func.call({ isConnected: false }, props = merge({}, props, store));
+      return createElement('span', el, function(span) { span.setAttribute('data-connect', func.name) });
     }
   }
 

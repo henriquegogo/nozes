@@ -1,6 +1,6 @@
 {
   "name": "nozes",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Declarative way to create plain javascript components",
   "main": "nozes.js",
   "repository": "henriquegogo/nozes",

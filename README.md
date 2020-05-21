@@ -91,6 +91,15 @@ var className = styleClass(`
 `);
 ```
 
+It's possible to set style as a string property or an object.
+
+```javascript
+section(
+  div({style: 'max-width: 200px'}, 'Limited width container'),
+  div({style: { maxWidth: 200 }, 'Limited width container')
+)
+```
+
 ### Watch
 
 Create an event listener that call a function if dispatched. An event can belong to a group.
