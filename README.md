@@ -164,7 +164,7 @@ node test
 ## Build minified
 
 ```sh
-npx uglify-js nozes.js -m > dist/nozes.min.js
+npx uglify-js nozes.js -cm > dist/nozes.min.js
 ```
 
 ## Examples

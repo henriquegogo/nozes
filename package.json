@@ -4,6 +4,10 @@
   "description": "Declarative tool to create plain javascript components",
   "main": "nozes.js",
   "repository": "henriquegogo/nozes",
+  "scripts": {
+    "build": "npx uglify-js nozes.js -cm > dist/nozes.min.js",
+    "test": "node test.js"
+  },
   "keywords": [
     "components",
     "dom",
