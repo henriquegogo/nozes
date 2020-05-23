@@ -1,5 +1,5 @@
 # Nozes
-Declarative way to create plain javascript components
+Declarative tool to create plain javascript components
 
 ## 5 minutes example
 
@@ -164,7 +164,7 @@ node test
 ## Build minified
 
 ```sh
-npx uglify-js nozes.js -m reserved=['hashchange'] > dist/nozes.min.js
+npx uglify-js nozes.js -m > dist/nozes.min.js
 ```
 
 ## Examples

@@ -161,7 +161,7 @@
   });
 
   describe('Connect', () => {
-    test('wrap a function that returns a span with "data-connect" attribute with the original function name as value', () => {
+    test('wrap a function that returns a "FUNCTION_NAME-component" element', () => {
       const { div } = createElement; 
 
       function TestComponent() {
@@ -170,7 +170,7 @@
 
       const testElement = connect(TestComponent)();
 
-      return assert(testElement.tagName === 'SPAN' && testElement['data-connect']);
+      return assert(testElement.tagName === 'TESTCOMPONENT-COMPONENT');
     });
 
     test('watch the function and send first prop as parameter if dispatched', () => {
@@ -265,7 +265,7 @@
     test('returns a connected wrapper', () => {
       var wrapper = router({});
 
-      return assert(wrapper['data-connect'] === 'hashchange');
+      return assert(wrapper.tagName === 'HASHCHANGE-COMPONENT');
     });
 
     test('call index if no hash route', () => {

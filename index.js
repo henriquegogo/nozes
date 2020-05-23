@@ -1,4 +1,4 @@
-import './nozes.js';
+import './dist/nozes.min.js';
 const nozes = new window.Nozes();
 export const createElement = nozes.createElement;
 export const watch = nozes.watch;
