@@ -177,7 +177,7 @@
         props = Object.assign({}, props, store);
         element = func.call({ isConnected: false }, props);
 
-        return createElement('connected-element', { name: func.name }, element);
+        return createElement(func.name + '-component', element);
       }
     }
 
