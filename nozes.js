@@ -1,6 +1,5 @@
 (function(global) { 
   global.Nozes = function() {
-
     var store = {},
       listeners = [],
       styles = {};
