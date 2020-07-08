@@ -137,7 +137,7 @@
         events = new Array(events, func.name);
       }
       else {
-        events = new Array(func.name);
+        events = events.concat(func.name);
       }
 
       return function(props) {
