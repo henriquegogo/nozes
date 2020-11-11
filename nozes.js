@@ -93,7 +93,7 @@
 
     function dispatch(event, msg) {
       if (event.constructor === String) {
-        if (msg.constructor === Object) {
+        if (msg !== undefined && msg.constructor === Object) {
           msg = Object.assign({}, store[event], msg);
         }
 
@@ -107,6 +107,22 @@
           listener.action(msg);
         }
       });
+    }
+
+    function update(func, oldProps, newProps) {
+      var element = oldProps.element;
+      var props = Object.assign({}, oldProps, store, newProps);
+      var updated = func.call(element, props);
+
+      if (element != null
+        && element.parentNode
+        && updated instanceof Node
+        && !element.isEqualNode(updated)) {
+        element.parentNode.replaceChild(updated, element);
+        oldProps.element = updated;
+      }
+      
+      return updated;
     }
 
     function connect(events, func) {
@@ -171,6 +187,7 @@
       styleClass: styleClass,
       watch: watch,
       dispatch: dispatch,
+      update: update,
       connect: connect,
       router: router
     };
