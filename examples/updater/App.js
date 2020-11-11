@@ -6,19 +6,15 @@ function App(props) {
   const { title, desc } = props;
   const setTitle = title => dispatch(App, { title });
 
-  function setState(state) {
-    update(App, props, state);
-  }
-
   if (this == window) {
-    watch(App, setState);
+    watch(App, state => update(App, props, state));
     setTimeout(() => setTitle('New title'), 1000);
   }
 
   return props.element = div(
     h1(title),
     p(desc),
-    button('Update', { onclick: () => setState({ title: 'Time is: ' + Date.now()}) })
+    button('Update', { onclick: () => setTitle('Time is: ' + Date.now()) })
   );
 }
 
