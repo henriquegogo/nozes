@@ -18,28 +18,9 @@
       return assert(divElement && spanElement);
     });
 
-    test('constructs a DOM element from a json', () => {
-      const ulElement = createElement({
-        tagName: 'ul',
-        children: [
-          { tagName: 'li', innerHTML: 'First' },
-          { tagName: 'li', innerHTML: 'Second' },
-          { tagName: 'li', innerHTML: 'Third' }
-        ]
-      });
-
-      return assert(ulElement.tagName === 'UL' && ulElement.children.length === 3);
-    });
-
-    test('constructs a DOM element from a string', () => {
-      const brElement = createElement('<br />');
-
-      return assert(brElement.tagName === 'BR');
-    });
-
     test('the return of any constructor is an HTMLElement', () => {
       const divElement = createElement('div');
-      const brElement = createElement('<br />');
+      const brElement = createElement('br');
       const spanElement = createElement.span();
 
       return assert(divElement.tagName === 'DIV' && brElement.tagName === 'BR' && spanElement.tagName === 'SPAN');

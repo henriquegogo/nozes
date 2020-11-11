@@ -64,8 +64,6 @@ You have different ways to create an element using createElement:
 ```javascript
 createElement.div()
 createElement('div')
-createElement('<div></div>')
-createElement({ tagName: 'div', children: [] })
 ```
 
 ### Styling

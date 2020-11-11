@@ -22,30 +22,11 @@
     function createElement(prop) {
       var argsList = [].slice.call(arguments).slice(1);
 
-      if (prop.constructor === Object) {
-        var tagName = prop.tagName
-        var children = prop.children || [];
-        var recursiveChildren = children.map(createElement);
-
-        delete prop.tagName;
-        delete prop.children;
-
-        return createElement(tagName, recursiveChildren, prop);
-      }
-      else if (prop.constructor === Function) {
+      if (prop.constructor === Function) {
         return prop.apply(undefined, argsList);
       }
 
-      var element;
-      if (prop.trim()[0] === '<') {
-        var domParser = new DOMParser();
-        var parsedDocument = domParser.parseFromString(prop, 'text/html');
-
-        element = parsedDocument.body.firstChild;
-      }
-      else {
-        element = document.createElement(prop);
-      }
+      var element = document.createElement(prop);
 
       function appendArgs(arg) {
         if (!arg) {
