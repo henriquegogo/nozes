@@ -135,7 +135,7 @@
             }
 
             props = Object.assign({}, props, store, newProps);
-            var updated = func.call({ isConnected: true }, props);
+            var updated = func.call(element, props);
 
             if (element != null
               && element.parentNode
@@ -148,7 +148,7 @@
         });
 
         props = Object.assign({}, props, store);
-        element = func.call({ isConnected: false }, props);
+        element = func.call(window, props);
 
         return createElement(func.name + '-component', element);
       }
