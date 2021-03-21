@@ -1,4 +1,4 @@
-import './dist/nozes.min.js';
+import './nozes.js';
 const nozes = new window.Nozes();
 export const createElement = nozes.createElement;
 export const styleClass = nozes.styleClass;
