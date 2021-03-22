@@ -1,6 +1,6 @@
 {
   "name": "nozes",
-  "version": "2.1.2",
+  "version": "2.1.3",
   "description": "Declarative tool to create plain javascript components",
   "main": "nozes.js",
   "repository": "henriquegogo/nozes",

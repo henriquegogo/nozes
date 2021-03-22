@@ -150,7 +150,7 @@
         props = Object.assign({}, props, store);
         element = func.call(window, props);
 
-        return createElement((func.name || 'connected') + '-component', element);
+        return element;
       }
     }
 
