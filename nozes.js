@@ -112,12 +112,12 @@
     function connect(events, func) {
       if (events.constructor === Function) {
         func = events;
-        events = new Array(func.name);
+        events = func.name ? new Array(func.name) : new Array();
       }
       else if (!Array.isArray(events)) {
-        events = new Array(events, func.name);
+        events = func.name ? new Array(events, func.name) : new Array(events);
       }
-      else {
+      else if (func.name) {
         events = events.concat(func.name);
       }
 
