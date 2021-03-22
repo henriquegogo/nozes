@@ -104,7 +104,7 @@
         if (!listener.event
           || listener.event === event
           || listener.event === event.name) {
-          listener.action(msg);
+          setTimeout(function() { listener.action(msg) });
         }
       });
     }
