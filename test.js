@@ -182,10 +182,10 @@
       }
 
       const connectedElement = connect(TestComponent)();
-      const initialElementTagName = connectedElement.children[0].tagName;
+      const initialElementTagName = connectedElement.tagName;
 
       dispatch(TestComponent, { showSpan: true });
-      const updatedElementTagName = connectedElement.children[0].tagName;
+      const updatedElementTagName = connectedElement.tagName;
 
       return assert(initialElementTagName === 'DIV' && updatedElementTagName === 'SPAN');
     });
@@ -229,12 +229,6 @@
       router({});
 
       return assert(window.onhashchange.name === dispatch.bind(undefined).name);
-    });
-
-    test('returns a connected wrapper', () => {
-      var wrapper = router({});
-
-      return assert(wrapper.tagName === 'HASHCHANGE-COMPONENT');
     });
 
     test('call index if no hash route', () => {
