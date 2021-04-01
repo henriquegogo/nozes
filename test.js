@@ -142,18 +142,6 @@
   });
 
   describe('Connect', () => {
-    test('wrap a function that returns a "FUNCTION_NAME-component" element', () => {
-      const { div } = createElement; 
-
-      function TestComponent() {
-        return div();
-      }
-
-      const testElement = connect(TestComponent)();
-
-      return assert(testElement.tagName === 'TESTCOMPONENT-COMPONENT');
-    });
-
     test('watch the function and send first prop as parameter if dispatched', () => {
       const { div } = createElement; 
       let msg = null;

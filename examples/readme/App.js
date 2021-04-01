@@ -1,5 +1,5 @@
 // App.js
-import { createElement, watch, router } from '../../index.js';
+import { createElement, watch, router } from '../../nozes.mjs';
 import Message from './Message.js';
 import Notifier from './Notifier.js';
 const { div, br, a } = createElement;

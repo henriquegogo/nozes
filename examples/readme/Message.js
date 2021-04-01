@@ -1,5 +1,5 @@
 // Message.js
-import { createElement, connect } from '../../index.js';
+import { createElement, connect } from '../../nozes.mjs';
 const { div, b } = createElement;
 
 function Message({ message }) {

@@ -1,5 +1,5 @@
 // Notifier.js
-import { createElement, dispatch } from '../../index.js';
+import { createElement, dispatch } from '../../nozes.mjs';
 const { button } = createElement;
 
 function Notifier() {

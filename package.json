@@ -1,11 +1,13 @@
 {
   "name": "nozes",
-  "version": "2.1.5",
+  "version": "2.2.0",
   "description": "Declarative tool to create plain javascript components",
   "main": "nozes.js",
   "repository": "henriquegogo/nozes",
   "scripts": {
-    "build": "npx uglify-js nozes.js -cm > dist/nozes.min.js",
+    "build-standalone": "npx uglify-js nozes.js -cm > dist/nozes.min.js",
+    "build-module": "npx rollup nozes.mjs | npx uglify-js -cm > dist/nozes.min.mjs",
+    "build": "npm run build-standalone && npm run build-module",
     "test": "node test.js"
   },
   "keywords": [

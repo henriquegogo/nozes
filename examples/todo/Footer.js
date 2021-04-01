@@ -1,4 +1,4 @@
-import { createElement, dispatch, connect } from '../../index.js';
+import { createElement, dispatch, connect } from '../../nozes.mjs';
 const { div, button, b } = createElement;
 
 function Footer({ tasklist = [] }) {

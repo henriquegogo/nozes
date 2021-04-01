@@ -1,4 +1,4 @@
-import { createElement, watch, dispatch, connect } from '../../index.js';
+import { createElement, watch, dispatch, connect } from '../../nozes.mjs';
 import Footer from './Footer.js';
 const { div, ul, li, a } = createElement;
 
