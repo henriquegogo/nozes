@@ -264,12 +264,12 @@
 })(function init() {
   global.results = [];
   global.window = { location: { hash: '' } };
-  global.Node = function Node(attr) { return Object.assign(this, attr) },
+  global.Node = function Node(attr) { return Object.assign(this, attr) };
   global.DOMParser = function DOMParser() {
     return { parseFromString: function(str) {
       return { body: { firstChild: global.document.createElement(str.match(/<(.*) \/>/)[1]) } };
     }};
-  },
+  };
   global.document = {
     createElement: function(tag) {
       return new global.Node({
@@ -287,7 +287,8 @@
       children: [],
       appendChild: function(child) { global.document.head.children.push(child) }
     }
-  }
+  };
+  global.setTimeout = function(func) { func() }
   return global;
 },
 function describe(text, func) { console.group('\n\x1b[37m', text); func(); console.groupEnd() },
