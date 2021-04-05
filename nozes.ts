@@ -99,7 +99,7 @@
         store[event as string] = msg;
       }
 
-      listeners.forEach(function(listener) {
+      listeners.forEach((listener: any) => {
         if (!listener.event
           || listener.event === event
           || listener.event === event.name) {
