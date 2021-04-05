@@ -8,6 +8,7 @@
     "build-standalone": "npx uglify-js nozes.js -cm > dist/nozes.min.js",
     "build-module": "npx rollup nozes.mjs | npx uglify-js -cm > dist/nozes.min.mjs",
     "build": "npm run build-standalone && npm run build-module",
+    "build-from-typescript": "npx tsc --outFile /dev/stdout nozes.ts | npx uglify-js -cm > dist/nozes.min.js",
     "test": "node test.js"
   },
   "keywords": [
