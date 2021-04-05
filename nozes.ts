@@ -1,5 +1,5 @@
 ((global: any) => { 
-  function Nozes(): any {
+  global.Nozes = function(): any {
     const store: any = {},
       listeners: Array<any> = [],
       styles: any = {};
@@ -178,6 +178,4 @@
       router: router
     };
   }
-
-  Object.assign(global, { Nozes });
 })(typeof module !== 'undefined' ? module.exports : window);
