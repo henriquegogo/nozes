@@ -1,4 +1,4 @@
-((global: Window) => { 
+((global: any) => { 
   function Nozes(): any {
     const store: any = {},
       listeners: Array<any> = [],

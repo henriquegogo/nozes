@@ -20,5 +20,8 @@
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/henriquegogo/nozes/issues"
+  },
+  "devDependencies": {
+    "@types/node": "^14.14.37"
   }
 }
