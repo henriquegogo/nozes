@@ -39,18 +39,14 @@
           if (arg.style && arg.style.constructor === Object) {
             Object.assign(element.style, arg.style)
           }
-        }
-        else if (arg.constructor === Function) {
+        } else if (arg.constructor === Function) {
           arg(element);
-        }
-        else if (arg.constructor === Array) {
+        } else if (arg.constructor === Array) {
           arg.forEach(appendArgs);
-        }
-        else if (arg.constructor === String || arg.constructor === Number) {
+        } else if (arg.constructor === String || arg.constructor === Number) {
           var textNode = document.createTextNode(arg);
           element.appendChild(textNode);
-        }
-        else if (arg.constructor.name.includes('Element')) {
+        } else if (arg.constructor.name.includes('Element')) {
           element.appendChild(arg);
         }
       }
@@ -85,8 +81,7 @@
 
       if (foundEvent) {
         Object.assign(foundEvent, { action: func });
-      }
-      else {
+      } else {
         listeners.push({ event: event, action: func, group: group });
       }
     }
@@ -113,11 +108,9 @@
       if (events.constructor === Function) {
         func = events;
         events = func.name ? new Array(func.name) : new Array();
-      }
-      else if (!Array.isArray(events)) {
+      } else if (!Array.isArray(events)) {
         events = func.name ? new Array(events, func.name) : new Array(events);
-      }
-      else if (func.name) {
+      } else if (func.name) {
         events = events.concat(func.name);
       }
 
