@@ -147,8 +147,9 @@
       }
     }
 
-    function router(routes) {
+    function router(routes, func) {
       function hashchange() {
+        func && func(window.location.hash);
         var path = window.location.hash.split('/');
         var route = path[1] = path[1] || 'index';
         return routes[route] && routes[path[1]].apply(undefined, path.slice(2));
