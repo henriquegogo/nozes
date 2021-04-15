@@ -1,8 +1,14 @@
 ((global: any) => { 
+  type Listener = {
+    event: string,
+    action: Function,
+    group: string
+  };
+
   global.Nozes = function(): any {
-    const store: any = {},
-      listeners: Array<any> = [],
-      styles: any = {};
+    const store: Record<string, unknown> = {},
+      listeners: Listener[] = [],
+      styles: Record<string, unknown> = {};
 
     const htmlTags: string[] = ('a abbr address area article aside audio b base bdi bdo '
       + 'blockquote body br button canvas caption cite code col colgroup data '
@@ -53,7 +59,7 @@
       return element;
     }
 
-    function styleClass(def: string): any {
+    function styleClass(def: string): unknown {
       const name = 's' + Math.random().toString(36).substr(2);
       const nestedDef = def
         .replace(/[&@]/, '} $&')
@@ -70,7 +76,7 @@
       return styles[def];
     }
 
-    function watch(event: string | Function, func: Function, group: string): void {
+    function watch(event: string, func: Function, group: string): void {
       const foundEvent = listeners.find(listener => group !== undefined
         && listener.group === group && listener.event === event);
 
@@ -94,7 +100,7 @@
         store[event as string] = msg;
       }
 
-      listeners.forEach((listener: any) => {
+      listeners.forEach((listener: Listener) => {
         if (!listener.event
           || listener.event === event
           || listener.event === event.name) {
@@ -117,7 +123,7 @@
         events = events.concat(func.name);
       }
 
-      return (props: any) => {
+      return (props: Record<string, unknown>) => {
         let element = document.createDocumentFragment() as Node;
 
         events.forEach((event: any) => {
@@ -125,7 +131,7 @@
             event = event.name;
           }
 
-          watch(event, (newProps: any) => {
+          watch(event, (newProps: Record<string, unknown>) => {
             if (event !== func.name) {
               newProps = {};
             }
@@ -150,10 +156,11 @@
       }
     }
 
-    function router(routes: any[]): Function {
+    function router(routes: Record<string, HTMLElement>[], func: Function = function() {}): Function {
       function hashchange() {
-        var path = window.location.hash.split('/');
-        var route = path[1] = path[1] || 'index';
+        func && func(window.location.hash);
+        const path = window.location.hash.split('/');
+        const route = path[1] = path[1] || 'index';
         return routes[route] && routes[path[1]].apply(undefined, path.slice(2));
       }
 
