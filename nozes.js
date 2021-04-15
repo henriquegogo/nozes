@@ -37,7 +37,7 @@
           Object.assign(element, arg);
 
           if (arg.style && arg.style.constructor === Object) {
-            Object.assign(element.style, arg.style)
+            Object.assign(element.style, arg.style);
           }
         } else if (arg.constructor === Function) {
           arg(element);
@@ -63,7 +63,7 @@
         .replace(/}\s*$/, '');
 
       if (!styles[def]) {
-        var styleString = '.' + (styles[def]=name) + ' {' + nestedDef + '}';
+        var styleString = '.' + (styles[def] = name) + ' {' + nestedDef + '}';
         var styleElement = createElement('style', styleString);
 
         document.head.appendChild(styleElement);
@@ -168,5 +168,5 @@
       connect: connect,
       router: router
     };
-  }
+  };
 })(typeof module !== 'undefined' ? module.exports : window);
