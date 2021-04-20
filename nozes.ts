@@ -146,13 +146,13 @@
               element.parentNode.replaceChild(updated, element);
               element = updated;
             }
-          }, undefined);
+          }, func.name);
         });
 
         props = Object.assign({}, props, store);
         element = func.call(window, props);
 
-        return element;
+        return createElement((func.name || 'connected') + '-component', element);
       }
     }
 

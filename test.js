@@ -182,10 +182,10 @@
       }
 
       const connectedElement = connect(TestComponent)();
-      const initialElementTagName = connectedElement.tagName;
+      const initialElementTagName = connectedElement.children[0].tagName;
 
       dispatch(TestComponent, { showSpan: true });
-      const updatedElementTagName = connectedElement.tagName;
+      const updatedElementTagName = connectedElement.children[0].tagName;
 
       return assert(initialElementTagName === 'DIV' && updatedElementTagName === 'SPAN');
     });
