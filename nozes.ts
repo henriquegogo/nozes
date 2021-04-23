@@ -87,12 +87,12 @@
       }
     }
 
-    function dispatch(event: string, msg: any): void;
+    function dispatch(event: string, msg: any, persist: boolean): void;
 
-    function dispatch(event: Function, msg: any): void;
+    function dispatch(event: Function, msg: any, persist: boolean): void;
 
-    function dispatch(event: any, msg: any): void {
-      if (event.constructor === String) {
+    function dispatch(event: any, msg: any, persist: boolean = true): void {
+      if (event.constructor === String && persist !== false) {
         if (msg !== undefined && msg.constructor === Object) {
           msg = Object.assign({}, store[event as string], msg);
         }

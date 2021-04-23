@@ -86,8 +86,8 @@
       }
     }
 
-    function dispatch(event, msg) {
-      if (event.constructor === String) {
+    function dispatch(event, msg, persist) {
+      if (event.constructor === String && persist !== false) {
         if (msg !== undefined && msg.constructor === Object) {
           msg = Object.assign({}, store[event], msg);
         }
