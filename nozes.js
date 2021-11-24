@@ -150,9 +150,22 @@
     function router(routes, func) {
       function hashchange() {
         func && func(window.location.hash);
-        var path = window.location.hash.split('/');
-        var route = path[1] = path[1] || 'index';
-        return routes[route] && routes[path[1]].apply(undefined, path.slice(2));
+        var path = window.location.hash.substr(2).split('/');
+
+        for (var routePath of Object.keys(routes)) {
+          var route = routePath.split('/');
+
+          if (path.length == route.length && route.every(function(item, i) {
+            return path[i] == item || item[0] == '{';
+          })) {
+            var params = path.filter(function(_, i) {
+              return route[i][0] == '{';
+            });
+            return routes[routePath].apply(undefined, params);
+          };
+        }
+
+        return routes['index'] && routes['index'].apply(undefined);
       }
 
       window.onhashchange = dispatch.bind(undefined, hashchange);
