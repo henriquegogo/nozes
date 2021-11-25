@@ -159,9 +159,21 @@
     function router(routes: Record<string, HTMLElement>[], func: Function = function() {}): Function {
       function hashchange() {
         func && func(window.location.hash);
-        const path = window.location.hash.split('/');
-        const route = path[1] = path[1] || 'index';
-        return routes[route] && routes[path[1]].apply(undefined, path.slice(2));
+        const path = window.location.hash.substr(1).split('/').filter(encodeURI);
+
+        for (const routePath of Object.keys(routes)) {
+          const route = routePath.split('/').filter(encodeURI);
+          const matchRoutePath = route.every(function(item, i) {
+            return path[i] == item || item[0] == '{';
+          });
+
+          if (path.length == route.length && matchRoutePath) {
+            const params = path.filter(function(_, i) { return route[i][0] == '{' });
+            return routes[routePath].apply(undefined, params);
+          };
+        }
+
+        return routes['index'] && routes['index'].apply(undefined);
       }
 
       window.onhashchange = dispatch.bind(undefined, hashchange);

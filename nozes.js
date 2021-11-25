@@ -29,9 +29,7 @@
       var element = document.createElement(prop);
 
       function appendArgs(arg) {
-        if (!arg) {
-          return;
-        }
+        if (!arg) { return }
 
         if (arg.constructor === Object) {
           Object.assign(element, arg);
@@ -150,17 +148,16 @@
     function router(routes, func) {
       function hashchange() {
         func && func(window.location.hash);
-        var path = window.location.hash.substr(2).split('/');
+        var path = window.location.hash.substr(1).split('/').filter(encodeURI);
 
         for (var routePath of Object.keys(routes)) {
-          var route = routePath.split('/');
-
-          if (path.length == route.length && route.every(function(item, i) {
+          var route = routePath.split('/').filter(encodeURI);
+          var matchRoutePath = route.every(function(item, i) {
             return path[i] == item || item[0] == '{';
-          })) {
-            var params = path.filter(function(_, i) {
-              return route[i][0] == '{';
-            });
+          });
+
+          if (path.length == route.length && matchRoutePath) {
+            var params = path.filter(function(_, i) { return route[i][0] == '{' });
             return routes[routePath].apply(undefined, params);
           };
         }

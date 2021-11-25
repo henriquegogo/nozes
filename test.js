@@ -252,8 +252,8 @@
     test('set props to route function based on route path', () => {
       var user_id;
       
-      router({ user: (id) => user_id = id });
-      window.location.hash = '#/user/10';
+      router({ '/user/{id}': (id) => user_id = id });
+      window.location.hash = '#user/10';
       window.onhashchange();
 
       return assert(user_id === '10');
