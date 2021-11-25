@@ -148,10 +148,10 @@ document.body.appendChild(
 ```javascript
 router({
   index: () => a({ href: '#/hello/world/earth' }, 'Home page'),
-  hello: (param, name) => a({ href: '#' }, 'Hello, ' + param + ' (' + name + ')')
+  '/hello/{param}/{name}': (param, name) => a({ href: '#' }, 'Hello, ' + param + ' (' + name + ')')
 })
 ```
-Router is a function with an object that defines routes and function callbacks that will be invoked when some hash router is called. Routes could receive multiple parameters: the first is the route itself and the others are parameters that will be used as arguments of route callback function.
+Router is a function with an object that defines routes and function callbacks that will be invoked when some hash router is called.
 
 ## Run tests
 
