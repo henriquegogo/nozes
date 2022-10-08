@@ -159,7 +159,7 @@
           if (path.length == route.length && matchRoutePath) {
             var params = path.filter(function(_, i) { return route[i][0] == '{' });
             return routes[routePath].apply(undefined, params);
-          };
+          }
         }
 
         return routes['index'] && routes['index'].apply(undefined);
